@@ -18,16 +18,33 @@ class _SignupPage extends State<SignupPage> {
             backgroundColor: Colors.white,
             bottom: TabBar(
                 indicatorColor: Colors.blue,
+                unselectedLabelColor: Colors.cyan,
+                indicatorSize: TabBarIndicatorSize.label,
                 indicator: BoxDecoration(
+                    gradient: LinearGradient(
+                        colors: [Colors.cyan, Colors.cyanAccent]),
                     borderRadius: BorderRadius.circular(50),
                     color: Colors.cyan),
-                labelColor: Colors.grey,
                 tabs: [
                   Tab(
-                    text: 'SIGN IN',
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          border: Border.all(color: Colors.cyan, width: 1)),
+                      child: Align(
+                        child: Text("SIGN IN"),
+                      ),
+                    ),
                   ),
                   Tab(
-                    text: 'SIGN UP',
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          border: Border.all(color: Colors.cyan, width: 1)),
+                      child: Align(
+                        child: Text("SIGN UP"),
+                      ),
+                    ),
                   )
                 ]),
           ),
