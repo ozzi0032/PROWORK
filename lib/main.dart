@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'phonelogin.dart';
 import 'signup.dart';
 
 void main() {
@@ -10,9 +10,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
+      theme: ThemeData(fontFamily: 'Gibson'),
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
-        '/signup': (BuildContext context) => new SignupPage()
+        '/signup': (BuildContext context) => new SignupPage(),
+        '/phonelogin': (BuildContext context) => new Phoneloginpage()
       },
       home: new MyHomePage(),
     );
@@ -44,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Stack(
                       children: [
                         Container(
-                          padding: EdgeInsets.fromLTRB(30.0, 315.0, 0.0, 0.0),
+                          padding: EdgeInsets.fromLTRB(30.0, 275.0, 0.0, 0.0),
                           child: Text(
                             'Welcome to',
                             style: TextStyle(
@@ -52,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.fromLTRB(85.0, 375.0, 0.0, 0.0),
+                          padding: EdgeInsets.fromLTRB(85.0, 320.0, 0.0, 0.0),
                           child: Text(
                             'ProWork',
                             style: TextStyle(
@@ -60,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.fromLTRB(20.0, 450.0, 0.0, 0.0),
+                          padding: EdgeInsets.fromLTRB(20.0, 385.0, 0.0, 0.0),
                           child: Text(
                             'The best way to discover and get you work done!',
                             style: TextStyle(
@@ -68,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.fromLTRB(115.0, 500.0, 0.0, 0.0),
+                          padding: EdgeInsets.fromLTRB(115.0, 435.0, 0.0, 0.0),
                           child: Text(
                             'Continue With',
                             style: TextStyle(
@@ -116,6 +118,29 @@ class _MyHomePageState extends State<MyHomePage> {
                         elevation: 7.0,
                         child: Center(
                           child: Text('FACEBOOK',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              )),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/phonelogin');
+                    },
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+                      height: 40.0,
+                      child: Material(
+                        borderRadius: BorderRadius.circular(10.0),
+                        shadowColor: Colors.cyanAccent,
+                        color: Colors.cyan,
+                        elevation: 7.0,
+                        child: Center(
+                          child: Text('PHONE',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
