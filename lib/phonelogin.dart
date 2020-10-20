@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'login.dart';
+
 class Phoneloginpage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -66,7 +68,10 @@ class _Phoneloginpage extends State<Phoneloginpage> {
           SizedBox(height: 40),
           GestureDetector(
             onTap: () {
-              Navigator.pop(context);
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (BuildContext context) {
+                return login();
+              }));
             },
             child: Container(
               padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),

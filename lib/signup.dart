@@ -1,6 +1,8 @@
 import 'package:PROWORK/signin.dart';
 import 'package:flutter/material.dart';
 
+import 'login.dart';
+
 class SignupPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -91,7 +93,10 @@ class _SignupPage extends State<SignupPage> {
                   SizedBox(height: 40),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pop(context);
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (BuildContext context) {
+                        return login();
+                      }));
                     },
                     child: Container(
                       padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
