@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'login.dart';
+import 'opt.dart';
 
 class Phoneloginpage extends StatefulWidget {
   @override
@@ -70,7 +70,7 @@ class _Phoneloginpage extends State<Phoneloginpage> {
             onTap: () {
               Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (BuildContext context) {
-                return login();
+                return OtpScreen();
               }));
             },
             child: Container(

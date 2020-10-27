@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'login.dart';
-
 class SigninPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -55,10 +53,7 @@ class SigninPage extends StatelessWidget {
             SizedBox(height: 40),
             GestureDetector(
               onTap: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (BuildContext context) {
-                  return login();
-                }));
+                Navigator.pop(context);
               },
               child: Container(
                 padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
