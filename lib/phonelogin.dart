@@ -68,7 +68,7 @@ class _Phoneloginpage extends State<Phoneloginpage> {
           SizedBox(height: 40),
           GestureDetector(
             onTap: () {
-              Navigator.pushReplacement(context,
+              Navigator.push(context,
                   MaterialPageRoute(builder: (BuildContext context) {
                 return OtpScreen();
               }));

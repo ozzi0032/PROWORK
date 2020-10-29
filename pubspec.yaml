@@ -33,6 +33,13 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  flutter_launcher_icons: 0.7.5
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/playstore.png"
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -46,7 +53,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets: 
-  - assets/
+  - assets/images/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
@@ -64,10 +71,10 @@ flutter:
   fonts:
     - family: Gibson
       fonts:
-        - asset: fonts/gibson-bold.ttf
-        - asset: fonts/Gibson-BoldItalic.ttf
-        - asset: fonts/Gibson-Regular.ttf
-        - asset: fonts/Gibson-RegularItalic.ttf
+        - asset: assets/fonts/gibson-bold.ttf
+        - asset: assets/fonts/Gibson-BoldItalic.ttf
+        - asset: assets/fonts/Gibson-Regular.ttf
+        - asset: assets/fonts/Gibson-RegularItalic.ttf
     
   #
   # For details regarding fonts from package dependencies,

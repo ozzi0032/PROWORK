@@ -16,7 +16,7 @@ class _MyHomePageState extends State<login> {
         body: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("assets/candidate.jpg"), fit: BoxFit.cover),
+                  image: AssetImage("assets/images/candidate.jpg"), fit: BoxFit.cover),
             ),
             child: Center(
                 child: SingleChildScrollView(
