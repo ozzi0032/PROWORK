@@ -2,14 +2,14 @@ import 'package:PROWORK/phonelogin.dart';
 import 'package:PROWORK/signup.dart';
 import 'package:flutter/material.dart';
 
-class login extends StatefulWidget {
+class Login extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return _MyHomePageState();
   }
 }
 
-class _MyHomePageState extends State<login> {
+class _MyHomePageState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
