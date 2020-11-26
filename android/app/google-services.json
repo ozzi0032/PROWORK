@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "516341252227",
+    "firebase_url": "https://prowork-4d393.firebaseio.com",
+    "project_id": "prowork-4d393",
+    "storage_bucket": "prowork-4d393.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516341252227:android:de566d57694235a1e59bb6",
+        "android_client_info": {
+          "package_name": "com.example.PROWORK"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "516341252227-bg8ejorvgpr00j69rrkjjlu1t3btets8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDeJ2idec7m2kxh1VNW1CD5X6ThCRn2uI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "516341252227-bg8ejorvgpr00j69rrkjjlu1t3btets8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

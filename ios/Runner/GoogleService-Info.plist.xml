@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>516341252227-qh7536kbn17a9h8ulvrnhi0fgrqer2a5.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.516341252227-qh7536kbn17a9h8ulvrnhi0fgrqer2a5</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBq5r_zWXSAEMLCeHJaFAEukp0q1LnqZCI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>516341252227</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.PROWORK</string>
+	<key>PROJECT_ID</key>
+	<string>prowork-4d393</string>
+	<key>STORAGE_BUCKET</key>
+	<string>prowork-4d393.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:516341252227:ios:02a57fab93c2092ce59bb6</string>
+	<key>DATABASE_URL</key>
+	<string>https://prowork-4d393.firebaseio.com</string>
+</dict>
+</plist>
