@@ -21,8 +21,8 @@ class _SignupPage extends State<SignupPage> {
                 unselectedLabelColor: Colors.cyan,
                 indicatorSize: TabBarIndicatorSize.label,
                 indicator: BoxDecoration(
-                    gradient:
-                        LinearGradient(List: [Colors.cyan, Colors.cyanAccent]),
+                    gradient: LinearGradient(
+                        colors: [Colors.cyan, Colors.cyanAccent]),
                     borderRadius: BorderRadius.circular(50),
                     color: Colors.cyan),
                 tabs: [
