@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:PROWORK/serviceproviderprofile.dart';
 
 class OtpScreen extends StatefulWidget {
   @override
@@ -195,7 +196,10 @@ class _Otp extends State<OtpScreen> {
           SizedBox(height: 40),
           GestureDetector(
             onTap: () {
-              Navigator.pop(context);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (BuildContext context) {
+                return ServiceProviderP();
+              }));
             },
             child: Container(
               padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),

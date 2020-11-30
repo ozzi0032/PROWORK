@@ -1,5 +1,5 @@
 import 'package:PROWORK/phonelogin.dart';
-import 'package:PROWORK/signup.dart';
+
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
@@ -16,7 +16,8 @@ class _MyHomePageState extends State<Login> {
         body: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("assets/images/candidate.jpg"), fit: BoxFit.cover),
+                  image: AssetImage("assets/images/candidate.jpg"),
+                  fit: BoxFit.cover),
             ),
             child: Center(
                 child: SingleChildScrollView(
@@ -64,59 +65,7 @@ class _MyHomePageState extends State<Login> {
                   SizedBox(height: 30),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (BuildContext context) {
-                        return SignupPage();
-                      }));
-                    },
-                    child: Container(
-                      padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
-                      height: 40.0,
-                      child: Material(
-                        borderRadius: BorderRadius.circular(10.0),
-                        shadowColor: Colors.cyanAccent,
-                        color: Colors.cyan,
-                        elevation: 7.0,
-                        child: Center(
-                          child: Text('EMAIL',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              )),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (BuildContext context) {
-                        return SignupPage();
-                      }));
-                    },
-                    child: Container(
-                      padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
-                      height: 40.0,
-                      child: Material(
-                        borderRadius: BorderRadius.circular(10.0),
-                        shadowColor: Colors.blueGrey,
-                        color: Colors.blueGrey[900],
-                        elevation: 7.0,
-                        child: Center(
-                          child: Text('FACEBOOK',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              )),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushReplacement(context,
+                      Navigator.push(context,
                           MaterialPageRoute(builder: (BuildContext context) {
                         return Phoneloginpage();
                       }));
@@ -130,7 +79,33 @@ class _MyHomePageState extends State<Login> {
                         color: Colors.cyan,
                         elevation: 7.0,
                         child: Center(
-                          child: Text('PHONE',
+                          child: Text('Customer',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              )),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 30),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (BuildContext context) {
+                        return Phoneloginpage();
+                      }));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+                      height: 40.0,
+                      child: Material(
+                        borderRadius: BorderRadius.circular(10.0),
+                        shadowColor: Colors.blueGrey,
+                        color: Colors.blueGrey[900],
+                        elevation: 7.0,
+                        child: Center(
+                          child: Text('Service provider',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
