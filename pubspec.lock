@@ -25,11 +25,25 @@ packages:
   charcode:
     dependency: transitive
     description:
-      name: charcode
+      name: characters
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0-nullsafety.1"
   clock:
+    dependency: transitive
+    description:
+      name: clock
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.0-nullsafety.1"
+  collection:
+    dependency: transitive
+    description:
+      name: charcode
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.15.0-nullsafety.3"
+  convert:
     dependency: transitive
     description:
       name: clock
@@ -95,6 +109,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0-nullsafety.1"
+  petitparser:
+    dependency: transitive
+    description:
+      name: petitparser
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.4.0"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -107,9 +128,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
 <<<<<<< HEAD
+<<<<<<< HEAD
     version: "1.8.0-nullsafety.2"
 =======
     version: "1.7.0"
+=======
+    version: "1.8.0-nullsafety.2"
+>>>>>>> ef981228c5fb028ab84bf4240cb1ce56d099a578
   splashscreen:
     dependency: "direct main"
     description:
@@ -167,9 +192,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
 <<<<<<< HEAD
+<<<<<<< HEAD
     version: "2.1.0-nullsafety.3"
 =======
     version: "2.0.8"
+=======
+    version: "2.1.0-nullsafety.3"
+>>>>>>> ef981228c5fb028ab84bf4240cb1ce56d099a578
   xml:
     dependency: transitive
     description:
