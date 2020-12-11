@@ -1,8 +1,9 @@
 import 'dart:io';
-
+import 'package:PROWORK/widgetuse.dart';
 import 'package:PROWORK/home.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:grouped_buttons/grouped_buttons.dart';
 
 class ServiceProviderP extends StatefulWidget {
   @override
@@ -13,12 +14,8 @@ class ServiceProviderP extends StatefulWidget {
 
 class _ServiceProviderP extends State<ServiceProviderP> {
   String _valskill;
-  List _subskill = [
-    "Tv Electrician",
-    "Computer Electrician",
-    "Home Electrician",
-    "AC Electrician"
-  ];
+  bool _visible = false;
+  List _subskill = ["Electrician", "Field1", "Field2", "Field3"];
   File _image;
   _openGallary(BuildContext context) async {
     // ignore: deprecated_member_use
@@ -211,23 +208,43 @@ class _ServiceProviderP extends State<ServiceProviderP> {
                       ),
                       keyboardType: TextInputType.emailAddress,
                     )))),
-        Center(
-            child: DropdownButton(
-          hint: Text("Select your expertise"),
-          value: _valskill,
-          items: _subskill.map((value) {
-            return DropdownMenuItem(
-              child: Text(value),
-              value: value,
-            );
-          }).toList(),
-          onChanged: (value) {
-            setState(() {
-              _valskill =
-                  value; //Untuk memberitahu _valFriends bahwa isi nya akan diubah sesuai dengan value yang kita pilih
-            });
-          },
-        )),
+        Container(
+            child: Padding(
+                padding: EdgeInsets.only(top: 20, left: 15, right: 15),
+                child: Material(
+                  elevation: 7.0,
+                  borderRadius: BorderRadius.circular(15.0),
+                  child: DropdownButton(
+                    hint: Text("Select your Skill"),
+                    elevation: 7,
+                    dropdownColor: Colors.cyan,
+                    isExpanded: true,
+                    value: _valskill,
+                    items: _subskill.map((value) {
+                      return DropdownMenuItem(
+                        child: Text(value),
+                        value: value,
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        _visible = true;
+                        _valskill =
+                            value; //Untuk memberitahu _valFriends bahwa isi nya akan diubah sesuai dengan value yang kita pilih
+                      });
+                    },
+                  ),
+                ))),
+        SizedBox(height: 30),
+        Visibility(
+          visible: _visible,
+          child: CheckboxGroup(labels: <String>[
+            "Tv Electrician",
+            "Computer Electrician",
+            "Home Electrician",
+            "AC Electrician"
+          ], onSelected: (List<String> checked) => print(checked.toString())),
+        ),
         Padding(padding: EdgeInsets.only(bottom: 20)),
         Padding(
           padding: EdgeInsets.only(top: 40, left: 40, right: 40),
@@ -327,23 +344,7 @@ class _ServiceProviderP extends State<ServiceProviderP> {
               return ServiceProviderhome();
             }));
           },
-          child: Container(
-            padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
-            height: 40.0,
-            child: Material(
-              borderRadius: BorderRadius.circular(10.0),
-              shadowColor: Colors.cyanAccent,
-              color: Colors.cyan,
-              elevation: 7.0,
-              child: Center(
-                child: Text('Save',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    )),
-              ),
-            ),
-          ),
+          child: Button(title: 'Save'),
         ),
         Padding(padding: EdgeInsets.only(bottom: 30)),
       ],
