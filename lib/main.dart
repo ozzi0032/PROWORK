@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      theme: ThemeData(fontFamily: 'Gibson'),
+      theme: ThemeData(fontFamily: 'Gibson', primarySwatch: Colors.cyan),
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
     );
