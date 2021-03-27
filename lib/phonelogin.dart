@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:PROWORK/widgetuse.dart';
 import 'opt.dart';
 
 class Phoneloginpage extends StatefulWidget {
@@ -73,23 +73,7 @@ class _Phoneloginpage extends State<Phoneloginpage> {
                 return OtpScreen();
               }));
             },
-            child: Container(
-              padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
-              height: 40.0,
-              child: Material(
-                borderRadius: BorderRadius.circular(10.0),
-                shadowColor: Colors.cyanAccent,
-                color: Colors.cyan,
-                elevation: 7.0,
-                child: Center(
-                  child: Text('NEXT STEP',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      )),
-                ),
-              ),
-            ),
+            child: Button(title: 'NEXT STEP'),
           ),
         ],
       ),
