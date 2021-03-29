@@ -224,7 +224,7 @@ class _ServiceProviderP extends State<ServiceProviderP> {
             child: StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance
                     .collection("Categories")
-                    .orderBy("Name")
+                    .where("ParentId", isEqualTo: "")
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
