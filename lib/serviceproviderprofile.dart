@@ -4,6 +4,8 @@ import 'package:PROWORK/home.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class ServiceProviderP extends StatefulWidget {
   @override
@@ -14,9 +16,14 @@ class ServiceProviderP extends StatefulWidget {
 
 class _ServiceProviderP extends State<ServiceProviderP> {
   String _valskill;
+  var selectedVal;
+  var _skill;
   bool _visible = false;
   List _subskill = ["Electrician", "Field1", "Field2", "Field3"];
+
   File _image;
+  var shopId;
+
   _openGallary(BuildContext context) async {
     // ignore: deprecated_member_use
     var pic = await ImagePicker.pickImage(source: ImageSource.gallery);
@@ -210,31 +217,42 @@ class _ServiceProviderP extends State<ServiceProviderP> {
                     )))),
         Container(
             child: Padding(
-                padding: EdgeInsets.only(top: 20, left: 15, right: 15),
-                child: Material(
-                  elevation: 7.0,
-                  borderRadius: BorderRadius.circular(15.0),
-                  child: DropdownButton(
-                    hint: Text("Select your Skill"),
+          padding: EdgeInsets.only(top: 20, left: 15, right: 15),
+          child: Material(
+            elevation: 7,
+            borderRadius: BorderRadius.circular(15.0),
+            child: StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection("Categories")
+                    .where("ParentId", isEqualTo: "")
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  }
+                  return DropdownButton(
+                    isExpanded: false,
                     elevation: 7,
                     dropdownColor: Colors.cyan,
-                    isExpanded: true,
-                    value: _valskill,
-                    items: _subskill.map((value) {
+                    items: snapshot.data.docs.map((value) {
                       return DropdownMenuItem(
-                        child: Text(value),
-                        value: value,
+                        value: value.get("Name"),
+                        child: Text("${value.get("Name")}"),
                       );
                     }).toList(),
                     onChanged: (value) {
-                      setState(() {
-                        _visible = true;
-                        _valskill =
-                            value; //Untuk memberitahu _valFriends bahwa isi nya akan diubah sesuai dengan value yang kita pilih
-                      });
+                      setState(
+                        () {
+                          _skill = value;
+                        },
+                      );
                     },
-                  ),
-                ))),
+                    value: _skill,
+                    hint: new Text("Select Skill"),
+                  );
+                }),
+          ),
+        )),
         SizedBox(height: 30),
         Visibility(
           visible: _visible,

@@ -26,6 +26,8 @@ dependencies:
   grouped_buttons: ^1.0.4  
   splashscreen: ^1.2.0
   image_picker: ^0.6.7+14
+  cloud_firestore: ^0.14.0
+  
 
   
   
