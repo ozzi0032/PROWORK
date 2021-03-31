@@ -1,4 +1,5 @@
 import 'package:PROWORK/menu.dart';
+import 'package:PROWORK/screens/buyer/index.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 
@@ -38,9 +39,7 @@ class _MainTabsState extends State<MainTabs>
 
   void loadTabBar(context) {
     List<Widget> _buyerTabs = [
-      Center(
-        child: Text("Home Buyer"),
-      ),
+      BuyerHomeFragment(),
       Center(
         child: Text("Tasks Buyer"),
       ),

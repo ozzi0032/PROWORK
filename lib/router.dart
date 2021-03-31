@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import './phonelogin.dart';
+import './screens/phonelogin.dart';
 import './screens/splashscreen.dart';
 import './screens/onboarding.dart';
 import './screens/otp.dart';
