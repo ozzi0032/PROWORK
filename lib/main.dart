@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
-import 'Splashscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
+
+import 'router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(new MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
       theme: ThemeData(fontFamily: 'Gibson', primarySwatch: Colors.cyan),
-      debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      debugShowCheckedModeBanner: true,
+      initialRoute: '/splash',
+      onGenerateRoute: Routes.generateRoute,
     );
   }
 }

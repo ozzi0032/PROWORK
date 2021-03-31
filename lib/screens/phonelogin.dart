@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:PROWORK/widgetuse.dart';
-import 'opt.dart';
+import 'package:PROWORK/widgets/appPrimaryButton.dart';
 
 class Phoneloginpage extends StatefulWidget {
+  final args;
+  Phoneloginpage({this.args});
   @override
   State<StatefulWidget> createState() {
     return _Phoneloginpage();
@@ -20,33 +21,10 @@ class _Phoneloginpage extends State<Phoneloginpage> {
       child: Column(
         children: <Widget>[
           Container(
-            child: Stack(
-              children: [
-                Container(
-                  padding: EdgeInsets.fromLTRB(0.0, 0.0, 140.0, 0.0),
-                  child: Text(
-                    'Enter your',
-                    style:
-                        TextStyle(fontSize: 50.0, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(0.0, 50.0, 140.0, 0.0),
-                  child: Text(
-                    'phone',
-                    style:
-                        TextStyle(fontSize: 50.0, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(0.0, 100.0, 140.0, 0.0),
-                  child: Text(
-                    'number:',
-                    style:
-                        TextStyle(fontSize: 50.0, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ],
+            padding: EdgeInsets.fromLTRB(0.0, 0.0, 140.0, 0.0),
+            child: Text(
+              'Enter your\nphone number',
+              style: TextStyle(fontSize: 50.0, fontWeight: FontWeight.bold),
             ),
           ),
           SizedBox(height: 30),
@@ -68,12 +46,9 @@ class _Phoneloginpage extends State<Phoneloginpage> {
           SizedBox(height: 40),
           GestureDetector(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (BuildContext context) {
-                return OtpScreen();
-              }));
+              Navigator.pushNamed(context, '/otp', arguments: widget.args);
             },
-            child: Button(title: 'NEXT STEP'),
+            child: AppButton(title: 'NEXT STEP'),
           ),
         ],
       ),

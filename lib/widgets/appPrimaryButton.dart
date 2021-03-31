@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class Button extends StatelessWidget {
+class AppButton extends StatelessWidget {
   final String title;
-  Button({@required this.title});
+  AppButton({@required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class Button extends StatelessWidget {
         borderRadius: BorderRadius.circular(10.0),
         shadowColor: Colors.cyanAccent,
         color: Colors.cyan,
-        elevation: 7.0,
+        elevation: 5.0,
         child: Center(
           child: Text(title,
               style: TextStyle(
