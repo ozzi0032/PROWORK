@@ -1,4 +1,9 @@
 class UserModel {
+  String fname; //Map "Profile" key
+  String lname; //Map "Profile" key
+  String email; //Map "Profile" key
+  String phoneNumber; //Map "Profile" key
+  String profileUrl; //Map "Profile" key
   String userId;
   String roleType;
   String status;
@@ -19,7 +24,13 @@ class UserModel {
   }
 
   Map<String, dynamic> toMap() => {
-        'Profile': profile,
+        'Profile': {
+          'email': email,
+          'fname': fname,
+          'lname': lname,
+          'phoneNumber': phoneNumber,
+          'profileUrl': profileUrl
+        },
         'roleType': roleType,
         'status': status,
         'userId': userId
