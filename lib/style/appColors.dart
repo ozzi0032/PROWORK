@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   static const Color scaffoldBackground = const Color(0xffffffff);
-  static const Color loginScaffoldBackground =
-      Color.fromRGBO(171, 229, 142, 1); //light green with opacity
+  static Color blackColorGoogle = const Color(0xff333333);
+  static Color redColorGoogle = const Color(0xffdb3236);
+  static Color blueColorGoogle = const Color(0xff1261A0);
   static const Color textColor =
-      const Color(0xff004445); //this colored is used for Text in app
+      const Color(0xff333333); //this colored is used for Text in app
   static const Color grey850 = const Color(0xff2a2e43);
   static const Color grey800 = const Color(0xff454f63);
   static const Color grey700 = const Color(0xff78849e);

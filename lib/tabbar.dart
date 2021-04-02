@@ -97,8 +97,11 @@ class _MainTabsState extends State<MainTabs>
     return Scaffold(
       resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
-      appBar: AppBar(elevation: 0.0, backgroundColor: Colors.cyan),
+      appBar: AppBar(
+        title: Text("Home"),
+      ),
       drawer: Drawer(
+        elevation: 10,
         child: MenuBar(),
       ),
       body: WillPopScope(
@@ -162,7 +165,7 @@ class _MainTabsState extends State<MainTabs>
     for (var i = 0; i < _tabView.length; i++) {
       list.add(Tab(
         icon: Icon(Icons.home),
-        text: 'Text',
+        //text: 'Text',
       ));
     }
     return list;

@@ -1,3 +1,5 @@
+import 'package:PROWORK/screens/buyer/addTask.dart';
+import 'package:PROWORK/style/appColors.dart';
 import 'package:PROWORK/widgets/taskCard.dart';
 import 'package:flutter/material.dart';
 
@@ -10,9 +12,12 @@ class _BuyerHomeFragmentState extends State<BuyerHomeFragment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white70,
       floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {},
+          backgroundColor: AppColors.blueColorGoogle,
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => AddTask()));
+          },
           label: Row(
             children: [
               Icon(Icons.add),

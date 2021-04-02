@@ -8,6 +8,8 @@ class AddTask extends StatefulWidget {
 class _AddTaskState extends State<AddTask> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(title: Text("Add Task")),
+    );
   }
 }

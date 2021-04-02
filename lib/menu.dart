@@ -30,8 +30,8 @@ class MenuBar extends StatelessWidget {
             trailing: Icon(Icons.arrow_right),
             onTap: () {}),
         ListTile(
-          leading: Icon(Icons.person),
-          title: Text("Contact US"),
+          leading: Icon(Icons.contact_page),
+          title: Text("Contact Us"),
           trailing: Icon(Icons.arrow_right),
         ),
         ListTile(
@@ -46,10 +46,7 @@ class MenuBar extends StatelessWidget {
         ),
         Divider(),
         ListTile(
-            leading: Icon(Icons.logout),
-            title: Text("Logout"),
-            trailing: Icon(Icons.arrow_right),
-            onTap: () {}),
+            leading: Icon(Icons.logout), title: Text("Logout"), onTap: () {}),
       ],
     );
   }
