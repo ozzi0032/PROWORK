@@ -1,13 +1,26 @@
 import 'package:PROWORK/style/appColors.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 
 import 'router.dart';
+import 'viewmodel/category_viewmodel.dart';
+import 'viewmodel/login_viewmodel.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(
+        create: (_) => LoginViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (_) => CategoryViewModel(),
+      ),
+    ],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {

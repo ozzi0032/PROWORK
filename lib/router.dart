@@ -11,7 +11,7 @@ class Routes {
     switch (settings.name) {
       case '/splash':
         return MaterialPageRoute(builder: (_) => SplashScreen());
-      case '/login':
+      case '/onboarding':
         return MaterialPageRoute(builder: (_) => OnboardingScreen());
       case '/phonelogin':
         return MaterialPageRoute(
