@@ -15,12 +15,9 @@ class ServiceProviderP extends StatefulWidget {
 }
 
 class _ServiceProviderP extends State<ServiceProviderP> {
-  String _valskill;
   var selectedVal;
   var _skill;
-  bool _visible = false;
-  List _subskill = ["Electrician", "Field1", "Field2", "Field3"];
-
+  bool _visible1 = false, _visible2 = false;
   File _image;
   var shopId;
 
@@ -244,6 +241,14 @@ class _ServiceProviderP extends State<ServiceProviderP> {
                       setState(
                         () {
                           _skill = value;
+                          if (_skill == "Electrician") {
+                            _visible1 = true;
+                            _visible2 = false;
+                          }
+                          if (_skill == "Plumber") {
+                            _visible1 = false;
+                            _visible2 = true;
+                          }
                         },
                       );
                     },
@@ -255,13 +260,48 @@ class _ServiceProviderP extends State<ServiceProviderP> {
         )),
         SizedBox(height: 30),
         Visibility(
-          visible: _visible,
-          child: CheckboxGroup(labels: <String>[
-            "Tv Electrician",
-            "Computer Electrician",
-            "Home Electrician",
-            "AC Electrician"
-          ], onSelected: (List<String> checked) => print(checked.toString())),
+          visible: _visible1,
+          child: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection("Categories")
+                .where("ParentId", isEqualTo: "cs1Pzjc50mzdjW3JLRca")
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return CircularProgressIndicator();
+              }
+              List<String> _subSkill = [];
+              for (int i = 0; i < snapshot.data.docs.length; i++) {
+                DocumentSnapshot snap = snapshot.data.docs[i];
+                _subSkill.add(snap.get("Name"));
+              }
+              return CheckboxGroup(
+                labels: _subSkill,
+              );
+            },
+          ),
+        ),
+        Visibility(
+          visible: _visible2,
+          child: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection("Categories")
+                .where("ParentId", isEqualTo: "clbZ4CA6DwUx1gAUogT5")
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return CircularProgressIndicator();
+              }
+              List<String> _subSkill = [];
+              for (int i = 0; i < snapshot.data.docs.length; i++) {
+                DocumentSnapshot snap = snapshot.data.docs[i];
+                _subSkill.add(snap.get("Name"));
+              }
+              return CheckboxGroup(
+                labels: _subSkill,
+              );
+            },
+          ),
         ),
         Padding(padding: EdgeInsets.only(bottom: 20)),
         Padding(
