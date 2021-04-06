@@ -1,11 +1,9 @@
 import 'dart:io';
-import 'package:PROWORK/widgetuse.dart';
-import 'package:PROWORK/home.dart';
+import 'package:PROWORK/widgets/appPrimaryButton.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class ServiceProviderP extends StatefulWidget {
   @override
@@ -397,12 +395,12 @@ class _ServiceProviderP extends State<ServiceProviderP> {
         SizedBox(height: 30),
         GestureDetector(
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (BuildContext context) {
-              return ServiceProviderhome();
-            }));
+            // Navigator.push(context,
+            //     MaterialPageRoute(builder: (BuildContext context) {
+            //   return ServiceProviderhome();
+            // }));
           },
-          child: Button(title: 'Save'),
+          child: AppButton(title: 'Save'),
         ),
         Padding(padding: EdgeInsets.only(bottom: 30)),
       ],

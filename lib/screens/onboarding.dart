@@ -1,15 +1,14 @@
-import 'package:PROWORK/phonelogin.dart';
-import 'package:PROWORK/widgetuse.dart';
+import 'package:PROWORK/widgets/appPrimaryButton.dart';
 import 'package:flutter/material.dart';
 
-class Login extends StatefulWidget {
+class OnboardingScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _MyHomePageState();
+    return _OnboardingScreenState();
   }
 }
 
-class _MyHomePageState extends State<Login> {
+class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,21 +64,17 @@ class _MyHomePageState extends State<Login> {
                   SizedBox(height: 30),
                   GestureDetector(
                       onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (BuildContext context) {
-                          return Phoneloginpage();
-                        }));
+                        Navigator.pushNamed(context, '/phonelogin',
+                            arguments: {"isBuyer": true});
                       },
-                      child: Button(title: 'Customer')),
+                      child: AppButton(title: 'Customer')),
                   SizedBox(height: 30),
                   GestureDetector(
                       onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (BuildContext context) {
-                          return Phoneloginpage();
-                        }));
+                        Navigator.pushNamed(context, '/phonelogin',
+                            arguments: {"isBuyer": false});
                       },
-                      child: Button(title: 'Service provider')),
+                      child: AppButton(title: 'Service provider')),
                 ],
               ),
             ))));

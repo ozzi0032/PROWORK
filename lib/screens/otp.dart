@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:PROWORK/serviceproviderprofile.dart';
-import 'package:PROWORK/widgetuse.dart';
+import 'package:PROWORK/widgets/appPrimaryButton.dart';
+
+import '../tabbar.dart';
 
 class OtpScreen extends StatefulWidget {
+  final args;
+  OtpScreen({this.args});
   @override
   State<StatefulWidget> createState() {
-    return _Otp();
+    return _OtpScreenState();
   }
 }
 
-class _Otp extends State<OtpScreen> {
+class _OtpScreenState extends State<OtpScreen> {
   FocusNode pin2FocuseNode;
   FocusNode pin3FocuseNode;
   FocusNode pin4FocuseNode;
@@ -197,12 +200,18 @@ class _Otp extends State<OtpScreen> {
           SizedBox(height: 40),
           GestureDetector(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (BuildContext context) {
-                return ServiceProviderP();
-              }));
+              // Navigator.push(context,
+              //     MaterialPageRoute(builder: (BuildContext context) {
+              //   return ServiceProviderP();
+              // }));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => MainTabs(
+                            isBuyer: widget.args["isBuyer"],
+                          )));
             },
-            child: Button(title: 'Verify'),
+            child: AppButton(title: 'Verify'),
           ),
         ],
       ),
