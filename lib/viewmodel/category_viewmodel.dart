@@ -1,19 +1,19 @@
-import 'package:PROWORK/enum/enum_viewState.dart';
 import 'package:PROWORK/model/model_category.dart';
 import 'package:PROWORK/services/index.dart';
-import 'package:PROWORK/viewmodel/base_viewmodel.dart';
+import 'package:flutter/cupertino.dart';
 
-class CategoryViewModel extends BaseViewModel {
+class CategoryViewModel extends ChangeNotifier {
   final Services _service = Services();
   List<CategoryModel> categories;
 
   String message;
+  bool isLoading;
 
   Future<void> getCategories() async {
     try {
       List<CategoryModel> _categories = [];
       List<CategoryModel> _subCategories = [];
-      setState(ViewState.Busy);
+      isLoading = true;
       categories = await _service.getCategories();
 
       //Adding parent Categories to the list from list of all categories
@@ -40,12 +40,14 @@ class CategoryViewModel extends BaseViewModel {
         ..._categories,
         ..._subCategories
       ]; //Put the parent categories at starting and sub-categories next to them to avoid computation complexity
-      setState(ViewState.Idle);
+
+      isLoading = false;
+      notifyListeners();
     } catch (error) {
       message = "There is an issue with the app during request the data, "
               "please contact admin for fixing the issues " +
           error.toString();
-      setState(ViewState.Idle);
+      isLoading = false;
     }
   }
 }
