@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'tabbar.dart';
+import 'package:provider/provider.dart';
+import 'viewmodel/category_viewmodel.dart';
 
 class ServiceProviderP extends StatefulWidget {
   @override
@@ -211,51 +214,34 @@ class _ServiceProviderP extends State<ServiceProviderP> {
                       keyboardType: TextInputType.emailAddress,
                     )))),
         Container(
-            child: Padding(
-          padding: EdgeInsets.only(top: 20, left: 15, right: 15),
-          child: Material(
-            elevation: 7,
-            borderRadius: BorderRadius.circular(15.0),
-            child: StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance
-                    .collection("Categories")
-                    .where("ParentId", isEqualTo: "")
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
-                  }
+          child: Padding(
+            padding: EdgeInsets.only(top: 20, left: 15, right: 15),
+            child: Material(
+              elevation: 7,
+              borderRadius: BorderRadius.circular(15.0),
+              child: Consumer<CategoryViewModel>(
+                builder: (context, model, child) {
                   return DropdownButton(
+                    hint: Text("Select Skill"),
+                    value: _skill,
                     isExpanded: false,
                     elevation: 7,
                     dropdownColor: Colors.cyan,
-                    items: snapshot.data.docs.map((value) {
+                    items: model.cat.map<DropdownMenuItem>((value) {
                       return DropdownMenuItem(
-                        value: value.get("Name"),
-                        child: Text("${value.get("Name")}"),
+                        value: value.name,
+                        child: Text(value.name),
                       );
                     }).toList(),
                     onChanged: (value) {
-                      setState(
-                        () {
-                          _skill = value;
-                          if (_skill == "Electrician") {
-                            _visible1 = true;
-                            _visible2 = false;
-                          }
-                          if (_skill == "Plumber") {
-                            _visible1 = false;
-                            _visible2 = true;
-                          }
-                        },
-                      );
+                      _skill = value;
                     },
-                    value: _skill,
-                    hint: new Text("Select Skill"),
                   );
-                }),
+                },
+              ),
+            ),
           ),
-        )),
+        ),
         SizedBox(height: 30),
         Visibility(
           visible: _visible1,
@@ -301,6 +287,17 @@ class _ServiceProviderP extends State<ServiceProviderP> {
             },
           ),
         ),
+        /*Visibility(
+          child: Consumer<CategoryViewModel>(
+            builder: (context, model, child) {
+              return CheckboxGroup(
+                labels: model.subCat.map<String>((value) {
+                  return value.name;
+                }),
+              );
+            },
+          ),
+        ),*/
         Padding(padding: EdgeInsets.only(bottom: 20)),
         Padding(
           padding: EdgeInsets.only(top: 40, left: 40, right: 40),
@@ -395,10 +392,12 @@ class _ServiceProviderP extends State<ServiceProviderP> {
         SizedBox(height: 30),
         GestureDetector(
           onTap: () {
-            // Navigator.push(context,
-            //     MaterialPageRoute(builder: (BuildContext context) {
-            //   return ServiceProviderhome();
-            // }));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => MainTabs(
+                          isBuyer: false,
+                        )));
           },
           child: AppButton(title: 'Save'),
         ),

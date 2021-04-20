@@ -6,13 +6,13 @@ import 'package:PROWORK/viewmodel/base_viewmodel.dart';
 class CategoryViewModel extends BaseViewModel {
   final Services _service = Services();
   List<CategoryModel> categories;
+  List<CategoryModel> _categories = [];
+  List<CategoryModel> _subCategories = [];
 
   String message;
 
   Future<void> getCategories() async {
     try {
-      List<CategoryModel> _categories = [];
-      List<CategoryModel> _subCategories = [];
       setState(ViewState.Busy);
       categories = await _service.getCategories();
 
@@ -47,5 +47,15 @@ class CategoryViewModel extends BaseViewModel {
           error.toString();
       setState(ViewState.Idle);
     }
+  }
+
+  List<CategoryModel> get cat {
+    getCategories();
+    return _categories;
+  }
+
+  List<CategoryModel> get subCat {
+    getCategories();
+    return _subCategories;
   }
 }

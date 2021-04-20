@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:PROWORK/widgets/appPrimaryButton.dart';
 
+import '../serviceproviderprofile.dart';
 import '../tabbar.dart';
 
 class OtpScreen extends StatefulWidget {
@@ -200,16 +201,16 @@ class _OtpScreenState extends State<OtpScreen> {
           SizedBox(height: 40),
           GestureDetector(
             onTap: () {
-              // Navigator.push(context,
-              //     MaterialPageRoute(builder: (BuildContext context) {
-              //   return ServiceProviderP();
-              // }));
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => MainTabs(
-                            isBuyer: widget.args["isBuyer"],
-                          )));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (BuildContext context) {
+                return ServiceProviderP();
+              }));
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (_) => MainTabs(
+              //               isBuyer: widget.args["isBuyer"],
+              //             )));
             },
             child: AppButton(title: 'Verify'),
           ),
