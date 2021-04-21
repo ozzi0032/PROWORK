@@ -33,7 +33,9 @@ class CategoryViewModel extends BaseViewModel {
         CategoryModel item = _categories
             .firstWhere((element) => element.id == cat.id, orElse: () => null);
         if (item == null && cat.parentId != "0") {
-          _subCategories.add(cat);
+          if (!_subCategories.contains(cat)) {
+            _subCategories.add(cat);
+          }
         }
       }
       categories = [

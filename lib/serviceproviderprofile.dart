@@ -235,6 +235,16 @@ class _ServiceProviderP extends State<ServiceProviderP> {
                     }).toList(),
                     onChanged: (value) {
                       _skill = value;
+                      setState(() {
+                        if (value == "Electrician") {
+                          _visible1 = true;
+                          _visible2 = false;
+                        }
+                        if (value == "Plumber") {
+                          _visible1 = false;
+                          _visible2 = true;
+                        }
+                      });
                     },
                   );
                 },
@@ -245,59 +255,32 @@ class _ServiceProviderP extends State<ServiceProviderP> {
         SizedBox(height: 30),
         Visibility(
           visible: _visible1,
-          child: StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance
-                .collection("Categories")
-                .where("ParentId", isEqualTo: "cs1Pzjc50mzdjW3JLRca")
-                .snapshots(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return CircularProgressIndicator();
+          child: Consumer<CategoryViewModel>(
+            builder: (context, model, child) {
+              List<String> subCat = [];
+              for (var cat in model.subCat) {
+                if (cat.parentId == "cs1Pzjc50mzdjW3JLRca") {
+                  subCat.add(cat.name);
+                }
               }
-              List<String> _subSkill = [];
-              for (int i = 0; i < snapshot.data.docs.length; i++) {
-                DocumentSnapshot snap = snapshot.data.docs[i];
-                _subSkill.add(snap.get("Name"));
-              }
-              return CheckboxGroup(
-                labels: _subSkill,
-              );
+              return CheckboxGroup(labels: subCat);
             },
           ),
         ),
         Visibility(
           visible: _visible2,
-          child: StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance
-                .collection("Categories")
-                .where("ParentId", isEqualTo: "clbZ4CA6DwUx1gAUogT5")
-                .snapshots(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return CircularProgressIndicator();
+          child: Consumer<CategoryViewModel>(
+            builder: (context, model, child) {
+              List<String> subCat = [];
+              for (var cat in model.subCat) {
+                if (cat.parentId == "clbZ4CA6DwUx1gAUogT5") {
+                  subCat.add(cat.name);
+                }
               }
-              List<String> _subSkill = [];
-              for (int i = 0; i < snapshot.data.docs.length; i++) {
-                DocumentSnapshot snap = snapshot.data.docs[i];
-                _subSkill.add(snap.get("Name"));
-              }
-              return CheckboxGroup(
-                labels: _subSkill,
-              );
+              return CheckboxGroup(labels: subCat);
             },
           ),
         ),
-        /*Visibility(
-          child: Consumer<CategoryViewModel>(
-            builder: (context, model, child) {
-              return CheckboxGroup(
-                labels: model.subCat.map<String>((value) {
-                  return value.name;
-                }),
-              );
-            },
-          ),
-        ),*/
         Padding(padding: EdgeInsets.only(bottom: 20)),
         Padding(
           padding: EdgeInsets.only(top: 40, left: 40, right: 40),
