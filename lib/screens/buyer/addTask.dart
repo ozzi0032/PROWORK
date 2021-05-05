@@ -1,6 +1,7 @@
 import 'package:PROWORK/model/model_category.dart';
 import 'package:PROWORK/style/appColors.dart';
 import 'package:PROWORK/viewmodel/category_viewmodel.dart';
+import 'package:PROWORK/widgets/appPrimaryButton.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,7 +29,7 @@ class _AddTaskState extends State<AddTask> {
     return Scaffold(
       appBar: AppBar(title: Text("Add Task")),
       body: ListView(
-        padding: const EdgeInsets.all(5.0),
+        padding: const EdgeInsets.all(8.0),
         children: [
           Text(
             "What Service Are You Looking For?",
@@ -78,7 +79,7 @@ class _AddTaskState extends State<AddTask> {
               child: DropdownButtonHideUnderline(
                 child: DropdownButton(
                   hint: Text("Select a category"),
-                  //value: _catSelectedItem,
+                  value: _catSelectedItem,
                   items: _catDropdownMenuItems,
                   onChanged: (value) {
                     setState(() {
@@ -113,6 +114,77 @@ class _AddTaskState extends State<AddTask> {
                       },
                     ),
                   ))),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            "Once you add your task, when would you like your task completed?",
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Days',
+                style: TextStyle(fontSize: 24),
+              ),
+              Container(
+                //padding: const EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(5.0)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    IconButton(icon: Icon(Icons.add), onPressed: () {}),
+                    Text(
+                      'Count',
+                    ),
+                    IconButton(icon: Icon(Icons.remove), onPressed: () {}),
+                  ],
+                ),
+              )
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            "What is your budget for this service?",
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Container(
+            padding: const EdgeInsets.all(5.0),
+            height: MediaQuery.of(context).size.height / 15,
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(5.0)),
+            child: TextField(
+              //autofocus: true,
+              cursorHeight: 25.0,
+              cursorColor: AppColors.blueColorGoogle,
+              style: TextStyle(fontSize: 18),
+              textAlignVertical: TextAlignVertical.center,
+              maxLines: 1,
+              enabled: true,
+              decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: 'Type here..',
+                  prefixIcon: Icon(Icons.money)),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          AppButton(
+            title: 'Add Task',
+          )
         ],
       ),
     );
