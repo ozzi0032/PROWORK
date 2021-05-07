@@ -1,6 +1,9 @@
+import 'package:PROWORK/screens/onboarding.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MenuBar extends StatelessWidget {
+  final _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -46,7 +49,13 @@ class MenuBar extends StatelessWidget {
         ),
         Divider(),
         ListTile(
-            leading: Icon(Icons.logout), title: Text("Logout"), onTap: () {}),
+            leading: Icon(Icons.logout),
+            title: Text("Logout"),
+            onTap: () async {
+              await _auth.signOut();
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => OnboardingScreen()));
+            }),
       ],
     );
   }

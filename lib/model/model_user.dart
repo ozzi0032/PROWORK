@@ -1,9 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class UserModel {
   String fname; //Map "Profile" key
   String lname; //Map "Profile" key
   String email; //Map "Profile" key
   String phoneNumber; //Map "Profile" key
   String profileUrl; //Map "Profile" key
+  String address; //Map "Profile" key
+  String cnicFront; //Map "Profile" key
+  String cnicBack; //Map "Profile" key
   String userId;
   String roleType;
   String status;
@@ -29,7 +34,10 @@ class UserModel {
           'fname': fname,
           'lname': lname,
           'phoneNumber': phoneNumber,
-          'profileUrl': profileUrl
+          'profileUrl': profileUrl,
+          "address": address,
+          "cnicFront": cnicFront,
+          "cnciBack": cnicBack,
         },
         'roleType': roleType,
         'status': status,

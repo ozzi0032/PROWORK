@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 class CategoryViewModel extends ChangeNotifier {
   final Services _service = Services();
   List<CategoryModel> categories;
+  List<CategoryModel> _categories = [];
+  List<CategoryModel> _subCategories = [];
 
   String message;
   bool isLoading;
@@ -33,7 +35,9 @@ class CategoryViewModel extends ChangeNotifier {
         CategoryModel item = _categories
             .firstWhere((element) => element.id == cat.id, orElse: () => null);
         if (item == null && cat.parentId != "0") {
-          _subCategories.add(cat);
+          if (!_subCategories.contains(cat)) {
+            _subCategories.add(cat);
+          }
         }
       }
       categories = [
@@ -49,5 +53,15 @@ class CategoryViewModel extends ChangeNotifier {
           error.toString();
       isLoading = false;
     }
+  }
+
+  List<CategoryModel> get cat {
+    getCategories();
+    return _categories;
+  }
+
+  List<CategoryModel> get subCat {
+    getCategories();
+    return _subCategories;
   }
 }
