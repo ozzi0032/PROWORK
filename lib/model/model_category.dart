@@ -37,9 +37,11 @@ class SkillsMapping {
     return data;
   }
 
-  Map<String, dynamic> toMap() => {
-        'userId': uid,
-        'user': userModel.toMap(),
-        'category': skills,
-      };
+  Map<String, dynamic> toMap() {
+    return {
+      'userId': uid,
+      'user': userModel.toMap(),
+      'category': skills,
+    };
+  }
 }

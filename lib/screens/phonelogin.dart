@@ -1,5 +1,9 @@
+import 'package:PROWORK/screens/otp.dart';
+import 'package:PROWORK/viewmodel/login_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:PROWORK/widgets/appPrimaryButton.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class Phoneloginpage extends StatefulWidget {
   final args;
@@ -11,6 +15,7 @@ class Phoneloginpage extends StatefulWidget {
 }
 
 class _Phoneloginpage extends State<Phoneloginpage> {
+  TextEditingController controller = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +40,7 @@ class _Phoneloginpage extends State<Phoneloginpage> {
                     elevation: 7.0,
                     borderRadius: BorderRadius.circular(15.0),
                     child: TextField(
+                      controller: controller,
                       autofocus: true,
                       decoration: InputDecoration(
                         border: InputBorder.none,
@@ -46,10 +52,15 @@ class _Phoneloginpage extends State<Phoneloginpage> {
           SizedBox(height: 40),
           GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context, '/otp', arguments: widget.args);
+              final phone = controller.text.trim();
+              //Navigator.pushNamed(context, '/otp', arguments: widget.args);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => OtpScreen(mobileNumber:phone)));
             },
             child: AppButton(title: 'NEXT STEP'),
-          ),
+          )
         ],
       ),
     ))));
