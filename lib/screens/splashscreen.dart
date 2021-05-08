@@ -1,6 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:PROWORK/viewmodel/category_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
+
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -20,10 +22,15 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
+  loadInitData() async {
+    Provider.of<CategoryViewModel>(context, listen: false).getCategories();
+  }
+
   @override
   void initState() {
     super.initState();
     timer();
+    loadInitData();
   }
 
   Widget build(BuildContext context) {

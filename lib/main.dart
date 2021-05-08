@@ -1,20 +1,20 @@
+import 'package:PROWORK/service_locator.dart';
 import 'package:PROWORK/style/appColors.dart';
-import 'package:PROWORK/tabbar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:PROWORK/viewmodel/user_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'router.dart';
 import 'viewmodel/category_viewmodel.dart';
-import 'viewmodel/login_viewmodel.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  setupServiceLocator(); //It should be called before main so that it can instantiate services before app registers
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(
-        create: (_) => LoginViewModel(),
+        create: (_) => UserViewModel(),
       ),
       ChangeNotifierProvider(
         create: (_) => CategoryViewModel(),

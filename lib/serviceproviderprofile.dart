@@ -1,13 +1,10 @@
 import 'dart:io';
 import 'package:PROWORK/model/model_category.dart';
 import 'package:PROWORK/model/model_user.dart';
-import 'package:PROWORK/screens/phonelogin.dart';
 import 'package:PROWORK/services/helper/firebase.dart';
 import 'package:PROWORK/utills/sharedPrefs.dart';
 import 'package:PROWORK/widgets/appPrimaryButton.dart';
-import 'package:checkbox_grouped/checkbox_grouped.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -18,7 +15,7 @@ import 'viewmodel/category_viewmodel.dart';
 import 'package:path/path.dart';
 
 class ServiceProviderP extends StatefulWidget {
-  final User phoneNumber;
+  final String phoneNumber;
   ServiceProviderP({this.phoneNumber});
   @override
   State<StatefulWidget> createState() {
@@ -44,8 +41,7 @@ class _ServiceProviderP extends State<ServiceProviderP> {
   List<CategoryModel> categoriesList = [];
   CategoryModel _selectedCategory = CategoryModel();
   getUser() async {
-    UserModel user =
-        await _firebaseService.getUserSpecific(widget.phoneNumber.phoneNumber);
+    UserModel user = await _firebaseService.getUserSpecific(widget.phoneNumber);
     if (user != null) {
       setState(() {
         _userModel = user;
@@ -56,7 +52,7 @@ class _ServiceProviderP extends State<ServiceProviderP> {
   createPersonalInfo() async {
     _userModel.fname = fNameController.text.toString();
     _userModel.lname = lNameController.text.toString();
-    _userModel.phoneNumber = widget.phoneNumber.phoneNumber;
+    _userModel.phoneNumber = widget.phoneNumber;
     _userModel.address = addressController.text.toString();
     _userModel.email = emailController.text.toString();
     await uploadPic(_profileImage, 1);
