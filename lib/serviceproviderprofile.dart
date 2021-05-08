@@ -1,9 +1,12 @@
 import 'dart:io';
+import 'package:PROWORK/model/model_category.dart';
 import 'package:PROWORK/model/model_user.dart';
 import 'package:PROWORK/screens/phonelogin.dart';
 import 'package:PROWORK/services/helper/firebase.dart';
 import 'package:PROWORK/utills/sharedPrefs.dart';
 import 'package:PROWORK/widgets/appPrimaryButton.dart';
+import 'package:checkbox_grouped/checkbox_grouped.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +40,9 @@ class _ServiceProviderP extends State<ServiceProviderP> {
   TextEditingController lNameController = new TextEditingController();
   TextEditingController addressController = new TextEditingController();
   TextEditingController emailController = new TextEditingController();
+  List<String> _checked = [];
+  List<CategoryModel> categoriesList = [];
+  CategoryModel _selectedCategory = CategoryModel();
   getUser() async {
     UserModel user =
         await _firebaseService.getUserSpecific(widget.phoneNumber.phoneNumber);
@@ -147,153 +153,155 @@ class _ServiceProviderP extends State<ServiceProviderP> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: ListView(
-      children: [
-        Center(
-          child: Padding(
-            padding: EdgeInsets.only(top: 40, left: 40, right: 40),
-            child: Text("Profile",
-                style: TextStyle(
-                    fontSize: 35,
-                    letterSpacing: 1.5,
-                    color: Colors.black54,
-                    fontWeight: FontWeight.bold)),
-          ),
-        ),
-        SizedBox(
-          height: 32,
-        ),
-        Center(
-          child: GestureDetector(
-            onTap: () {
-              showChoiceDialog(context, 1);
-            },
-            child: CircleAvatar(
-              radius: 55,
-              backgroundColor: Colors.black54,
-              child: _profileImage != null
-                  ? ClipRRect(
-                      borderRadius: BorderRadius.circular(50),
-                      child: Image.file(
-                        _profileImage,
-                        width: MediaQuery.of(context).size.width / 2,
-                        height: MediaQuery.of(context).size.width / 2,
-                        fit: BoxFit.fitHeight,
-                      ),
-                    )
-                  : Container(
-                      decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(50)),
-                      width: 100,
-                      height: 100,
-                      child: Icon(
-                        Icons.camera_alt,
-                        color: Colors.grey[800],
-                      ),
-                    ),
-            ),
-          ),
-        ),
-        Container(
-          child: Padding(
-            padding: EdgeInsets.only(top: 20, left: 15, right: 15),
-            child: Material(
-              borderRadius: BorderRadius.circular(15.0),
-              elevation: 7.0,
-              child: TextField(
-                controller: fNameController,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  labelText: (" First Name"),
-                ),
-                keyboardType: TextInputType.visiblePassword,
+    return Consumer<CategoryViewModel>(
+      builder: (context, model, child) {
+        return Scaffold(
+            body: ListView(
+          children: [
+            Center(
+              child: Padding(
+                padding: EdgeInsets.only(top: 40, left: 40, right: 40),
+                child: Text("Profile",
+                    style: TextStyle(
+                        fontSize: 35,
+                        letterSpacing: 1.5,
+                        color: Colors.black54,
+                        fontWeight: FontWeight.bold)),
               ),
             ),
-          ),
-        ),
-        Container(
-          child: Padding(
-            padding: EdgeInsets.only(top: 20, left: 15, right: 15),
-            child: Material(
-              borderRadius: BorderRadius.circular(15.0),
-              elevation: 7.0,
-              child: TextField(
-                controller: lNameController,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  labelText: (" Last Name"),
+            SizedBox(
+              height: 32,
+            ),
+            Center(
+              child: GestureDetector(
+                onTap: () {
+                  showChoiceDialog(context, 1);
+                },
+                child: CircleAvatar(
+                  radius: 55,
+                  backgroundColor: Colors.black54,
+                  child: _profileImage != null
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Image.file(
+                            _profileImage,
+                            width: MediaQuery.of(context).size.width / 2,
+                            height: MediaQuery.of(context).size.width / 2,
+                            fit: BoxFit.fitHeight,
+                          ),
+                        )
+                      : Container(
+                          decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.circular(50)),
+                          width: 100,
+                          height: 100,
+                          child: Icon(
+                            Icons.camera_alt,
+                            color: Colors.grey[800],
+                          ),
+                        ),
                 ),
-                keyboardType: TextInputType.visiblePassword,
               ),
             ),
-          ),
-        ),
-        Container(
-          child: Padding(
-            padding: EdgeInsets.only(top: 20, left: 15, right: 15),
-            child: Material(
-              borderRadius: BorderRadius.circular(15.0),
-              elevation: 7.0,
-              child: TextField(
-                controller: addressController,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  labelText: (" Address"),
-                ),
-                keyboardType: TextInputType.visiblePassword,
-              ),
-            ),
-          ),
-        ),
-        Container(
-          child: Padding(
-            padding: EdgeInsets.only(top: 20, left: 15, right: 15),
-            child: Material(
-              borderRadius: BorderRadius.circular(15.0),
-              elevation: 7.0,
-              child: TextField(
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  labelText: (" City"),
-                ),
-                keyboardType: TextInputType.visiblePassword,
-              ),
-            ),
-          ),
-        ),
-        Container(
-          child: Padding(
-            padding: EdgeInsets.only(top: 20, left: 15, right: 15),
-            child: Material(
-              borderRadius: BorderRadius.circular(15.0),
-              elevation: 7.0,
-              child: TextField(
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  labelText: (" state"),
-                ),
-                keyboardType: TextInputType.visiblePassword,
-              ),
-            ),
-          ),
-        ),
-        Container(
-            child: Padding(
+            Container(
+              child: Padding(
                 padding: EdgeInsets.only(top: 20, left: 15, right: 15),
                 child: Material(
-                    elevation: 7.0,
-                    borderRadius: BorderRadius.circular(15.0),
-                    child: TextField(
-                      controller: emailController,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        labelText: (" Email"),
-                      ),
-                      keyboardType: TextInputType.emailAddress,
-                    )))),
-        Container(
+                  borderRadius: BorderRadius.circular(15.0),
+                  elevation: 7.0,
+                  child: TextField(
+                    controller: fNameController,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      labelText: (" First Name"),
+                    ),
+                    keyboardType: TextInputType.visiblePassword,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              child: Padding(
+                padding: EdgeInsets.only(top: 20, left: 15, right: 15),
+                child: Material(
+                  borderRadius: BorderRadius.circular(15.0),
+                  elevation: 7.0,
+                  child: TextField(
+                    controller: lNameController,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      labelText: (" Last Name"),
+                    ),
+                    keyboardType: TextInputType.visiblePassword,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              child: Padding(
+                padding: EdgeInsets.only(top: 20, left: 15, right: 15),
+                child: Material(
+                  borderRadius: BorderRadius.circular(15.0),
+                  elevation: 7.0,
+                  child: TextField(
+                    controller: addressController,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      labelText: (" Address"),
+                    ),
+                    keyboardType: TextInputType.visiblePassword,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              child: Padding(
+                padding: EdgeInsets.only(top: 20, left: 15, right: 15),
+                child: Material(
+                  borderRadius: BorderRadius.circular(15.0),
+                  elevation: 7.0,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      labelText: (" City"),
+                    ),
+                    keyboardType: TextInputType.visiblePassword,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              child: Padding(
+                padding: EdgeInsets.only(top: 20, left: 15, right: 15),
+                child: Material(
+                  borderRadius: BorderRadius.circular(15.0),
+                  elevation: 7.0,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      labelText: (" state"),
+                    ),
+                    keyboardType: TextInputType.visiblePassword,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+                child: Padding(
+                    padding: EdgeInsets.only(top: 20, left: 15, right: 15),
+                    child: Material(
+                        elevation: 7.0,
+                        borderRadius: BorderRadius.circular(15.0),
+                        child: TextField(
+                          controller: emailController,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            labelText: (" Email"),
+                          ),
+                          keyboardType: TextInputType.emailAddress,
+                        )))),
+            /*Container(
           child: Padding(
             padding: EdgeInsets.only(top: 20, left: 15, right: 15),
             child: Material(
@@ -343,7 +351,15 @@ class _ServiceProviderP extends State<ServiceProviderP> {
                   subCat.add(cat.name);
                 }
               }
-              return CheckboxGroup(labels: subCat);
+              return CheckboxGroup(
+                labels: subCat,
+                onSelected: (List selected) {
+                  setState(() {
+                    _checked = selected;
+                  });
+                },
+                checked: _checked,
+              );
             },
           ),
         ),
@@ -357,116 +373,217 @@ class _ServiceProviderP extends State<ServiceProviderP> {
                   subCat.add(cat.name);
                 }
               }
-              return CheckboxGroup(labels: subCat);
+              return CheckboxGroup(
+                labels: subCat,
+                onSelected: (List selected) {
+                  setState(() {
+                    _checked = selected;
+                  });
+                },
+                checked: _checked,
+              );
             },
           ),
-        ),
-        Padding(padding: EdgeInsets.only(bottom: 20)),
-        Padding(
-          padding: EdgeInsets.only(top: 40, left: 40, right: 40),
-          child: Text("Enter front image of CNIC",
-              style: TextStyle(
-                  fontSize: 20,
-                  letterSpacing: 1.5,
-                  color: Colors.black54,
-                  fontWeight: FontWeight.bold)),
-        ),
-        SizedBox(
-          height: 32,
-        ),
-        Center(
-          child: GestureDetector(
-            onTap: () {
-              showChoiceDialog(context, 2);
-            },
-            child: CircleAvatar(
-              radius: 55,
-              backgroundColor: Colors.black54,
-              child: _cnicFront != null
-                  ? ClipRRect(
-                      borderRadius: BorderRadius.circular(50),
-                      child: Image.file(
-                        _cnicFront,
-                        width: MediaQuery.of(context).size.width / 2,
-                        height: MediaQuery.of(context).size.width / 2,
-                        fit: BoxFit.fitHeight,
-                      ),
-                    )
-                  : Container(
-                      decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(50)),
-                      width: 100,
-                      height: 100,
-                      child: Icon(
-                        Icons.camera_alt,
-                        color: Colors.grey[800],
-                      ),
-                    ),
+        ),*/
+            Container(
+                child: Padding(
+              padding: EdgeInsets.only(top: 20, left: 15, right: 15),
+              child: Material(
+                elevation: 7,
+                borderRadius: BorderRadius.circular(15.0),
+                child: StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection("Categories")
+                        .where("ParentId", isEqualTo: "0")
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return CircularProgressIndicator();
+                      }
+                      return DropdownButton(
+                        isExpanded: false,
+                        elevation: 7,
+                        dropdownColor: Colors.cyan,
+                        items: snapshot.data.docs.map((value) {
+                          return DropdownMenuItem(
+                            value: value.get("Name"),
+                            child: Text("${value.get("Name")}"),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(
+                            () {
+                              _skill = value;
+                              if (_skill == "Electrician") {
+                                _visible1 = true;
+                                _visible2 = false;
+                              }
+                              if (_skill == "Plumber") {
+                                _visible1 = false;
+                                _visible2 = true;
+                              }
+                            },
+                          );
+                        },
+                        value: _skill,
+                        hint: new Text("Select Skill"),
+                      );
+                    }),
+              ),
+            )),
+            SizedBox(height: 30),
+            Visibility(
+              visible: _visible1,
+              child: Consumer<CategoryViewModel>(
+                builder: (context, model, child) {
+                  List<String> subCat = [];
+                  for (var cat in model.subCat) {
+                    if (cat.parentId == "cs1Pzjc50mzdjW3JLRca") {
+                      subCat.add(cat.name);
+                    }
+                  }
+                  return CheckboxGroup(
+                    labels: subCat,
+                    onSelected: (List selected) {
+                      setState(() {
+                        _checked = selected;
+                      });
+                    },
+                    checked: _checked,
+                  );
+                },
+              ),
             ),
-          ),
-        ),
-        Padding(padding: EdgeInsets.only(bottom: 20)),
-        Padding(
-          padding: EdgeInsets.only(top: 40, left: 40, right: 40),
-          child: Text("Enter back image of CNIC",
-              style: TextStyle(
-                  fontSize: 20,
-                  letterSpacing: 1.5,
-                  color: Colors.black54,
-                  fontWeight: FontWeight.bold)),
-        ),
-        SizedBox(
-          height: 32,
-        ),
-        Center(
-          child: GestureDetector(
-            onTap: () {
-              showChoiceDialog(context, 3);
-            },
-            child: CircleAvatar(
-              radius: 55,
-              backgroundColor: Colors.black54,
-              child: _cnicBack != null
-                  ? ClipRRect(
-                      borderRadius: BorderRadius.circular(50),
-                      child: Image.file(
-                        _cnicBack,
-                        width: MediaQuery.of(context).size.width / 2,
-                        height: MediaQuery.of(context).size.width / 2,
-                        fit: BoxFit.fitHeight,
-                      ),
-                    )
-                  : Container(
-                      decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(50)),
-                      width: 100,
-                      height: 100,
-                      child: Icon(
-                        Icons.camera_alt,
-                        color: Colors.grey[800],
-                      ),
-                    ),
+            Visibility(
+              visible: _visible2,
+              child: Consumer<CategoryViewModel>(
+                builder: (context, model, child) {
+                  List<String> subCat = [];
+                  for (var cat in model.subCat) {
+                    if (cat.parentId == "clbZ4CA6DwUx1gAUogT5") {
+                      subCat.add(cat.name);
+                    }
+                  }
+                  return CheckboxGroup(
+                    labels: subCat,
+                    onSelected: (List selected) {
+                      setState(() {
+                        _checked = selected;
+                      });
+                    },
+                    checked: _checked,
+                  );
+                },
+              ),
             ),
-          ),
-        ),
-        Padding(padding: EdgeInsets.only(bottom: 20)),
-        SizedBox(height: 30),
-        GestureDetector(
-          onTap: () async {
-            await createPersonalInfo();
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => MainTabs(
-                          isBuyer: false,
-                        )));
-          },
-          child: AppButton(title: 'Save'),
-        ),
-        Padding(padding: EdgeInsets.only(bottom: 30)),
-      ],
-    ));
+            Padding(padding: EdgeInsets.only(bottom: 20)),
+            Padding(
+              padding: EdgeInsets.only(top: 40, left: 40, right: 40),
+              child: Text("Enter front image of CNIC",
+                  style: TextStyle(
+                      fontSize: 20,
+                      letterSpacing: 1.5,
+                      color: Colors.black54,
+                      fontWeight: FontWeight.bold)),
+            ),
+            SizedBox(
+              height: 32,
+            ),
+            Center(
+              child: GestureDetector(
+                onTap: () {
+                  showChoiceDialog(context, 2);
+                },
+                child: CircleAvatar(
+                  radius: 55,
+                  backgroundColor: Colors.black54,
+                  child: _cnicFront != null
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Image.file(
+                            _cnicFront,
+                            width: MediaQuery.of(context).size.width / 2,
+                            height: MediaQuery.of(context).size.width / 2,
+                            fit: BoxFit.fitHeight,
+                          ),
+                        )
+                      : Container(
+                          decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.circular(50)),
+                          width: 100,
+                          height: 100,
+                          child: Icon(
+                            Icons.camera_alt,
+                            color: Colors.grey[800],
+                          ),
+                        ),
+                ),
+              ),
+            ),
+            Padding(padding: EdgeInsets.only(bottom: 20)),
+            Padding(
+              padding: EdgeInsets.only(top: 40, left: 40, right: 40),
+              child: Text("Enter back image of CNIC",
+                  style: TextStyle(
+                      fontSize: 20,
+                      letterSpacing: 1.5,
+                      color: Colors.black54,
+                      fontWeight: FontWeight.bold)),
+            ),
+            SizedBox(
+              height: 32,
+            ),
+            Center(
+              child: GestureDetector(
+                onTap: () {
+                  showChoiceDialog(context, 3);
+                },
+                child: CircleAvatar(
+                  radius: 55,
+                  backgroundColor: Colors.black54,
+                  child: _cnicBack != null
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Image.file(
+                            _cnicBack,
+                            width: MediaQuery.of(context).size.width / 2,
+                            height: MediaQuery.of(context).size.width / 2,
+                            fit: BoxFit.fitHeight,
+                          ),
+                        )
+                      : Container(
+                          decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.circular(50)),
+                          width: 100,
+                          height: 100,
+                          child: Icon(
+                            Icons.camera_alt,
+                            color: Colors.grey[800],
+                          ),
+                        ),
+                ),
+              ),
+            ),
+            Padding(padding: EdgeInsets.only(bottom: 20)),
+            SizedBox(height: 30),
+            GestureDetector(
+              onTap: () async {
+                await createPersonalInfo();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => MainTabs(
+                              isBuyer: false,
+                            )));
+              },
+              child: AppButton(title: 'Save'),
+            ),
+            Padding(padding: EdgeInsets.only(bottom: 30)),
+          ],
+        ));
+      },
+    );
   }
 }
