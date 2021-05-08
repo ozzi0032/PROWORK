@@ -32,7 +32,8 @@ dependencies:
   firebase_core: any
   firebase_auth: any
   shared_preferences: any
-  firebase_storage:
+  firebase_storage: any
+  localstorage: ^3.0.6
   
   
 

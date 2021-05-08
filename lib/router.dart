@@ -18,11 +18,11 @@ class Routes {
             builder: (_) => Phoneloginpage(
                   args: settings.arguments,
                 ));
-      /* case '/otp':
+      case '/otp':
         return MaterialPageRoute(
             builder: (_) => OtpScreen(
                   args: settings.arguments,
-                ));*/
+                ));
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(
