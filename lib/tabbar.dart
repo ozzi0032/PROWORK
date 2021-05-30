@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:PROWORK/menu.dart';
 import 'package:PROWORK/screens/buyer/index.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'serproprofile.dart';
 
@@ -117,11 +120,11 @@ class _MainTabsState extends State<MainTabs>
                     content: Text('Really want to leave the app?'),
                     actions: <Widget>[
                       TextButton(
-                        onPressed: () => Navigator.of(context).pop(false),
+                        onPressed: () => Navigator.pop(context),
                         child: Text('No'),
                       ),
                       TextButton(
-                        onPressed: () => Navigator.of(context).pop(true),
+                        onPressed: () => SystemNavigator.pop(),
                         child: Text('Yes'),
                       ),
                     ],

@@ -12,7 +12,6 @@ class AddTask extends StatefulWidget {
 
 class _AddTaskState extends State<AddTask> {
   bool _subCatVisiblity = false;
-
   CategoryModel _catSelectedItem;
   CategoryModel _subCatSelectedItem;
   List<DropdownMenuItem<CategoryModel>> _catDropdownMenuItems;

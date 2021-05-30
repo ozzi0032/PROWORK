@@ -92,4 +92,41 @@ class FirebaseService implements BaseServices {
       return null;
     }
   }
+
+  Future mapSkill(List<String> categories, Map userData) async {
+    DocumentReference dr =
+        _firebaseFirestore.collection("Skills Mapping").doc(userData["userId"]);
+    await dr.set({
+      "userId": userData["userId"],
+      "user": userData["Profile"],
+      "category": categories
+    });
+  }
+
+  Future<void> updateSkillMap(List<String> categories, Map userData) async {
+    DocumentReference dr =
+        _firebaseFirestore.collection("Skills Mapping").doc(userData["userId"]);
+    await dr.update({
+      "userId": userData["userId"],
+      "user": userData["Profile"],
+      "category": categories
+    });
+  }
+
+  Future<bool> checkSkill(String userId) async {
+    bool status;
+    await _firebaseFirestore
+        .collection("Skills Mapping")
+        .where("userId", isEqualTo: userId)
+        .limit(1)
+        .get()
+        .then((snapshot) {
+      if (snapshot != null && snapshot.docs.isNotEmpty) {
+        status = true;
+      } else {
+        status = false;
+      }
+    });
+    return status;
+  }
 }

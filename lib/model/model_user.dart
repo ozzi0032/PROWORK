@@ -20,7 +20,7 @@ class UserModel {
         userId: map['userId'],
         roleType: map['roleType'],
         status: map['status'],
-        profile: map['profile']);
+        profile: map['Profile']);
   }
 
   toJSON(UserModel obj) {

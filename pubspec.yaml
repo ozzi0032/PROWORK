@@ -34,6 +34,7 @@ dependencies:
   shared_preferences: any
   firebase_storage: any
   localstorage: ^3.0.6
+  checkbox_grouped:
   
   
 

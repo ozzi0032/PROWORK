@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:PROWORK/model/model_user.dart';
 import 'package:PROWORK/services/helper/firebase.dart';
 import 'package:PROWORK/utills/sharedPrefs.dart';
@@ -102,7 +104,7 @@ class UserViewModel extends ChangeNotifier {
       // save the user Info as local storage
       final ready = await storage.ready;
       if (ready) {
-        await storage.setItem('userInfo', user);
+        await storage.setItem('userInfo', user.toMap());
       }
     } catch (err) {}
   }
@@ -120,6 +122,13 @@ class UserViewModel extends ChangeNotifier {
         }
       }
     } catch (error) {}
+  }
+
+  Future<void> clearStorage() async {
+    final storage = LocalStorage('PROWORK');
+    await storage.clear();
+    user = null;
+    notifyListeners();
   }
 
   // void updateUser(UserModel newUser) {

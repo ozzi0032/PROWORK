@@ -2,8 +2,11 @@ import 'dart:io';
 import 'package:PROWORK/model/model_category.dart';
 import 'package:PROWORK/model/model_user.dart';
 import 'package:PROWORK/services/helper/firebase.dart';
+import 'package:PROWORK/utills/exceptions.dart';
 import 'package:PROWORK/utills/sharedPrefs.dart';
+import 'package:PROWORK/viewmodel/user_viewmodel.dart';
 import 'package:PROWORK/widgets/appPrimaryButton.dart';
+import 'package:checkbox_grouped/checkbox_grouped.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -30,16 +33,15 @@ class _ServiceProviderP extends State<ServiceProviderP> {
   File _profileImage, _cnicFront, _cnicBack;
   String _profileURL, _cnicFrontURL, _cnicBackURL;
   UploadTask task;
-  var shopId;
   FirebaseService _firebaseService = new FirebaseService();
   UserModel _userModel = new UserModel();
   TextEditingController fNameController = new TextEditingController();
   TextEditingController lNameController = new TextEditingController();
   TextEditingController addressController = new TextEditingController();
   TextEditingController emailController = new TextEditingController();
-  List<String> _checked = [];
+  List<String> _checked1 = [], _checked2 = [];
   List<CategoryModel> categoriesList = [];
-  CategoryModel _selectedCategory = CategoryModel();
+
   getUser() async {
     UserModel user = await _firebaseService.getUserSpecific(widget.phoneNumber);
     if (user != null) {
@@ -98,6 +100,22 @@ class _ServiceProviderP extends State<ServiceProviderP> {
     Navigator.of(context).pop();
   }
 
+  mapskill() async {
+    if (_skill == "Electrician") {
+      _firebaseService.mapSkill(_checked1, _userModel.toMap());
+    } else if (_skill == "Plumber") {
+      _firebaseService.mapSkill(_checked2, _userModel.toMap());
+    }
+  }
+
+  updateSkill() async {
+    if (_skill == "Electrician") {
+      _firebaseService.mapSkill(_checked1, _userModel.toMap());
+    } else if (_skill == "Plumber") {
+      _firebaseService.mapSkill(_checked2, _userModel.toMap());
+    }
+  }
+
   Future<void> showChoiceDialog(BuildContext context, int picNo) {
     return showDialog(
         context: context,
@@ -141,6 +159,13 @@ class _ServiceProviderP extends State<ServiceProviderP> {
     }
   }
 
+  bool validateEmail(String value) {
+    Pattern pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regex = new RegExp(pattern);
+    return (!regex.hasMatch(value)) ? false : true;
+  }
+
   @override
   void initState() {
     getUser();
@@ -149,437 +174,380 @@ class _ServiceProviderP extends State<ServiceProviderP> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<CategoryViewModel>(
-      builder: (context, model, child) {
-        return Scaffold(
-            body: ListView(
-          children: [
-            Center(
-              child: Padding(
-                padding: EdgeInsets.only(top: 40, left: 40, right: 40),
-                child: Text("Profile",
-                    style: TextStyle(
-                        fontSize: 35,
-                        letterSpacing: 1.5,
-                        color: Colors.black54,
-                        fontWeight: FontWeight.bold)),
-              ),
-            ),
-            SizedBox(
-              height: 32,
-            ),
-            Center(
-              child: GestureDetector(
-                onTap: () {
-                  showChoiceDialog(context, 1);
-                },
-                child: CircleAvatar(
-                  radius: 55,
-                  backgroundColor: Colors.black54,
-                  child: _profileImage != null
-                      ? ClipRRect(
-                          borderRadius: BorderRadius.circular(50),
-                          child: Image.file(
-                            _profileImage,
-                            width: MediaQuery.of(context).size.width / 2,
-                            height: MediaQuery.of(context).size.width / 2,
-                            fit: BoxFit.fitHeight,
-                          ),
-                        )
-                      : Container(
-                          decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(50)),
-                          width: 100,
-                          height: 100,
-                          child: Icon(
-                            Icons.camera_alt,
-                            color: Colors.grey[800],
-                          ),
-                        ),
-                ),
-              ),
-            ),
-            Container(
-              child: Padding(
-                padding: EdgeInsets.only(top: 20, left: 15, right: 15),
-                child: Material(
-                  borderRadius: BorderRadius.circular(15.0),
-                  elevation: 7.0,
-                  child: TextField(
-                    controller: fNameController,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      labelText: (" First Name"),
+    return Scaffold(
+        body: ListView(
+      children: [
+        Center(
+          child: Padding(
+            padding: EdgeInsets.only(top: 40, left: 40, right: 40),
+            child: Text("Profile",
+                style: TextStyle(
+                    fontSize: 35,
+                    letterSpacing: 1.5,
+                    color: Colors.black54,
+                    fontWeight: FontWeight.bold)),
+          ),
+        ),
+        SizedBox(
+          height: 32,
+        ),
+        Center(
+          child: GestureDetector(
+            onTap: () {
+              showChoiceDialog(context, 1);
+            },
+            child: CircleAvatar(
+              radius: 55,
+              backgroundColor: Colors.black54,
+              child: _profileImage != null
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: Image.file(
+                        _profileImage,
+                        width: MediaQuery.of(context).size.width / 2,
+                        height: MediaQuery.of(context).size.width / 2,
+                        fit: BoxFit.fitHeight,
+                      ),
+                    )
+                  : Container(
+                      decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(50)),
+                      width: 100,
+                      height: 100,
+                      child: Icon(
+                        Icons.camera_alt,
+                        color: Colors.grey[800],
+                      ),
                     ),
-                    keyboardType: TextInputType.visiblePassword,
-                  ),
-                ),
-              ),
             ),
-            Container(
-              child: Padding(
-                padding: EdgeInsets.only(top: 20, left: 15, right: 15),
-                child: Material(
-                  borderRadius: BorderRadius.circular(15.0),
-                  elevation: 7.0,
-                  child: TextField(
-                    controller: lNameController,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      labelText: (" Last Name"),
-                    ),
-                    keyboardType: TextInputType.visiblePassword,
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              child: Padding(
-                padding: EdgeInsets.only(top: 20, left: 15, right: 15),
-                child: Material(
-                  borderRadius: BorderRadius.circular(15.0),
-                  elevation: 7.0,
-                  child: TextField(
-                    controller: addressController,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      labelText: (" Address"),
-                    ),
-                    keyboardType: TextInputType.visiblePassword,
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              child: Padding(
-                padding: EdgeInsets.only(top: 20, left: 15, right: 15),
-                child: Material(
-                  borderRadius: BorderRadius.circular(15.0),
-                  elevation: 7.0,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      labelText: (" City"),
-                    ),
-                    keyboardType: TextInputType.visiblePassword,
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              child: Padding(
-                padding: EdgeInsets.only(top: 20, left: 15, right: 15),
-                child: Material(
-                  borderRadius: BorderRadius.circular(15.0),
-                  elevation: 7.0,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      labelText: (" state"),
-                    ),
-                    keyboardType: TextInputType.visiblePassword,
-                  ),
-                ),
-              ),
-            ),
-            Container(
-                child: Padding(
-                    padding: EdgeInsets.only(top: 20, left: 15, right: 15),
-                    child: Material(
-                        elevation: 7.0,
-                        borderRadius: BorderRadius.circular(15.0),
-                        child: TextField(
-                          controller: emailController,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            labelText: (" Email"),
-                          ),
-                          keyboardType: TextInputType.emailAddress,
-                        )))),
-            /*Container(
+          ),
+        ),
+        Container(
           child: Padding(
             padding: EdgeInsets.only(top: 20, left: 15, right: 15),
             child: Material(
-              elevation: 7,
               borderRadius: BorderRadius.circular(15.0),
-              child: Consumer<CategoryViewModel>(
-                builder: (context, model, child) {
-                  return DropdownButton(
-                    hint: Text("Select Skill"),
-                    value: _skill,
-                    isExpanded: false,
-                    elevation: 7,
-                    dropdownColor: Colors.cyan,
-                    items: model.cat.map<DropdownMenuItem>((value) {
-                      return DropdownMenuItem(
-                        value: value.name,
-                        child: Text(value.name),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      _skill = value;
-                      setState(() {
-                        if (value == "Electrician") {
-                          _visible1 = true;
-                          _visible2 = false;
-                        }
-                        if (value == "Plumber") {
-                          _visible1 = false;
-                          _visible2 = true;
-                        }
-                      });
-                    },
-                  );
-                },
+              elevation: 7.0,
+              child: TextField(
+                controller: fNameController,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  labelText: (" First Name"),
+                ),
+                keyboardType: TextInputType.visiblePassword,
               ),
             ),
           ),
         ),
+        Container(
+          child: Padding(
+            padding: EdgeInsets.only(top: 20, left: 15, right: 15),
+            child: Material(
+              borderRadius: BorderRadius.circular(15.0),
+              elevation: 7.0,
+              child: TextField(
+                controller: lNameController,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  labelText: (" Last Name"),
+                ),
+                keyboardType: TextInputType.visiblePassword,
+              ),
+            ),
+          ),
+        ),
+        Container(
+          child: Padding(
+            padding: EdgeInsets.only(top: 20, left: 15, right: 15),
+            child: Material(
+              borderRadius: BorderRadius.circular(15.0),
+              elevation: 7.0,
+              child: TextField(
+                controller: addressController,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  labelText: (" Address"),
+                ),
+                keyboardType: TextInputType.visiblePassword,
+              ),
+            ),
+          ),
+        ),
+        Container(
+            child: Padding(
+                padding: EdgeInsets.only(top: 20, left: 15, right: 15),
+                child: Material(
+                    elevation: 7.0,
+                    borderRadius: BorderRadius.circular(15.0),
+                    child: TextField(
+                      controller: emailController,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        labelText: (" Email"),
+                      ),
+                      keyboardType: TextInputType.emailAddress,
+                    )))),
+        Container(
+            child: Padding(
+          padding: EdgeInsets.only(top: 20, left: 15, right: 15),
+          child: Material(
+            elevation: 7,
+            borderRadius: BorderRadius.circular(15.0),
+            child: StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection("Categories")
+                    .where("ParentId", isEqualTo: "0")
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  }
+                  return DropdownButton(
+                    isExpanded: false,
+                    elevation: 7,
+                    dropdownColor: Colors.cyan,
+                    items: snapshot.data.docs.map((value) {
+                      return DropdownMenuItem(
+                        value: value.get("Name"),
+                        child: Text("${value.get("Name")}"),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(
+                        () {
+                          _skill = value;
+                          if (_skill == "Electrician") {
+                            _visible1 = true;
+                            _visible2 = false;
+                          }
+                          if (_skill == "Plumber") {
+                            _visible1 = false;
+                            _visible2 = true;
+                          }
+                        },
+                      );
+                    },
+                    value: _skill,
+                    hint: new Text("Select Skill"),
+                  );
+                }),
+          ),
+        )),
         SizedBox(height: 30),
         Visibility(
           visible: _visible1,
-          child: Consumer<CategoryViewModel>(
-            builder: (context, model, child) {
-              List<String> subCat = [];
-              for (var cat in model.subCat) {
-                if (cat.parentId == "cs1Pzjc50mzdjW3JLRca") {
-                  subCat.add(cat.name);
-                }
+          child: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection("Categories")
+                .where("ParentId", isEqualTo: "cs1Pzjc50mzdjW3JLRca")
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return CircularProgressIndicator();
+              }
+              List<String> _subSkill = [];
+              for (int i = 0; i < snapshot.data.docs.length; i++) {
+                DocumentSnapshot snap = snapshot.data.docs[i];
+                _subSkill.add(snap.get("Name"));
               }
               return CheckboxGroup(
-                labels: subCat,
-                onSelected: (List selected) {
+                labels: _subSkill,
+                onSelected: (List<String> selected) {
                   setState(() {
-                    _checked = selected;
+                    _checked1 = selected;
                   });
                 },
-                checked: _checked,
+                checked: _checked1,
               );
             },
           ),
         ),
         Visibility(
           visible: _visible2,
-          child: Consumer<CategoryViewModel>(
-            builder: (context, model, child) {
-              List<String> subCat = [];
-              for (var cat in model.subCat) {
-                if (cat.parentId == "clbZ4CA6DwUx1gAUogT5") {
-                  subCat.add(cat.name);
-                }
+          child: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection("Categories")
+                .where("ParentId", isEqualTo: "clbZ4CA6DwUx1gAUogT5")
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return CircularProgressIndicator();
+              }
+              List<String> _subSkill = [];
+              for (int i = 0; i < snapshot.data.docs.length; i++) {
+                DocumentSnapshot snap = snapshot.data.docs[i];
+                _subSkill.add(snap.get("Name"));
               }
               return CheckboxGroup(
-                labels: subCat,
-                onSelected: (List selected) {
+                labels: _subSkill,
+                onSelected: (List<String> selected) {
                   setState(() {
-                    _checked = selected;
+                    _checked2 = selected;
                   });
                 },
-                checked: _checked,
+                checked: _checked2,
               );
             },
           ),
-        ),*/
-            Container(
-                child: Padding(
-              padding: EdgeInsets.only(top: 20, left: 15, right: 15),
-              child: Material(
-                elevation: 7,
-                borderRadius: BorderRadius.circular(15.0),
-                child: StreamBuilder<QuerySnapshot>(
-                    stream: FirebaseFirestore.instance
-                        .collection("Categories")
-                        .where("ParentId", isEqualTo: "0")
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return CircularProgressIndicator();
-                      }
-                      return DropdownButton(
-                        isExpanded: false,
-                        elevation: 7,
-                        dropdownColor: Colors.cyan,
-                        items: snapshot.data.docs.map((value) {
-                          return DropdownMenuItem(
-                            value: value.get("Name"),
-                            child: Text("${value.get("Name")}"),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(
-                            () {
-                              _skill = value;
-                              if (_skill == "Electrician") {
-                                _visible1 = true;
-                                _visible2 = false;
-                              }
-                              if (_skill == "Plumber") {
-                                _visible1 = false;
-                                _visible2 = true;
-                              }
-                            },
-                          );
-                        },
-                        value: _skill,
-                        hint: new Text("Select Skill"),
-                      );
-                    }),
-              ),
-            )),
-            SizedBox(height: 30),
-            Visibility(
-              visible: _visible1,
-              child: Consumer<CategoryViewModel>(
-                builder: (context, model, child) {
-                  List<String> subCat = [];
-                  for (var cat in model.subCat) {
-                    if (cat.parentId == "cs1Pzjc50mzdjW3JLRca") {
-                      subCat.add(cat.name);
-                    }
-                  }
-                  return CheckboxGroup(
-                    labels: subCat,
-                    onSelected: (List selected) {
-                      setState(() {
-                        _checked = selected;
-                      });
-                    },
-                    checked: _checked,
-                  );
-                },
-              ),
+        ),
+        Padding(padding: EdgeInsets.only(bottom: 20)),
+        Padding(
+          padding: EdgeInsets.only(top: 40, left: 40, right: 40),
+          child: Text("Enter front image of CNIC",
+              style: TextStyle(
+                  fontSize: 20,
+                  letterSpacing: 1.5,
+                  color: Colors.black54,
+                  fontWeight: FontWeight.bold)),
+        ),
+        SizedBox(
+          height: 32,
+        ),
+        Center(
+          child: GestureDetector(
+            onTap: () {
+              showChoiceDialog(context, 2);
+            },
+            child: CircleAvatar(
+              radius: 55,
+              backgroundColor: Colors.black54,
+              child: _cnicFront != null
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: Image.file(
+                        _cnicFront,
+                        width: MediaQuery.of(context).size.width / 2,
+                        height: MediaQuery.of(context).size.width / 2,
+                        fit: BoxFit.fitHeight,
+                      ),
+                    )
+                  : Container(
+                      decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(50)),
+                      width: 100,
+                      height: 100,
+                      child: Icon(
+                        Icons.camera_alt,
+                        color: Colors.grey[800],
+                      ),
+                    ),
             ),
-            Visibility(
-              visible: _visible2,
-              child: Consumer<CategoryViewModel>(
-                builder: (context, model, child) {
-                  List<String> subCat = [];
-                  for (var cat in model.subCat) {
-                    if (cat.parentId == "clbZ4CA6DwUx1gAUogT5") {
-                      subCat.add(cat.name);
-                    }
-                  }
-                  return CheckboxGroup(
-                    labels: subCat,
-                    onSelected: (List selected) {
-                      setState(() {
-                        _checked = selected;
-                      });
-                    },
-                    checked: _checked,
-                  );
-                },
-              ),
+          ),
+        ),
+        Padding(padding: EdgeInsets.only(bottom: 20)),
+        Padding(
+          padding: EdgeInsets.only(top: 40, left: 40, right: 40),
+          child: Text("Enter back image of CNIC",
+              style: TextStyle(
+                  fontSize: 20,
+                  letterSpacing: 1.5,
+                  color: Colors.black54,
+                  fontWeight: FontWeight.bold)),
+        ),
+        SizedBox(
+          height: 32,
+        ),
+        Center(
+          child: GestureDetector(
+            onTap: () {
+              showChoiceDialog(context, 3);
+            },
+            child: CircleAvatar(
+              radius: 55,
+              backgroundColor: Colors.black54,
+              child: _cnicBack != null
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: Image.file(
+                        _cnicBack,
+                        width: MediaQuery.of(context).size.width / 2,
+                        height: MediaQuery.of(context).size.width / 2,
+                        fit: BoxFit.fitHeight,
+                      ),
+                    )
+                  : Container(
+                      decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(50)),
+                      width: 100,
+                      height: 100,
+                      child: Icon(
+                        Icons.camera_alt,
+                        color: Colors.grey[800],
+                      ),
+                    ),
             ),
-            Padding(padding: EdgeInsets.only(bottom: 20)),
-            Padding(
-              padding: EdgeInsets.only(top: 40, left: 40, right: 40),
-              child: Text("Enter front image of CNIC",
-                  style: TextStyle(
-                      fontSize: 20,
-                      letterSpacing: 1.5,
-                      color: Colors.black54,
-                      fontWeight: FontWeight.bold)),
-            ),
-            SizedBox(
-              height: 32,
-            ),
-            Center(
-              child: GestureDetector(
-                onTap: () {
-                  showChoiceDialog(context, 2);
-                },
-                child: CircleAvatar(
-                  radius: 55,
-                  backgroundColor: Colors.black54,
-                  child: _cnicFront != null
-                      ? ClipRRect(
-                          borderRadius: BorderRadius.circular(50),
-                          child: Image.file(
-                            _cnicFront,
-                            width: MediaQuery.of(context).size.width / 2,
-                            height: MediaQuery.of(context).size.width / 2,
-                            fit: BoxFit.fitHeight,
-                          ),
-                        )
-                      : Container(
-                          decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(50)),
-                          width: 100,
-                          height: 100,
-                          child: Icon(
-                            Icons.camera_alt,
-                            color: Colors.grey[800],
-                          ),
-                        ),
-                ),
-              ),
-            ),
-            Padding(padding: EdgeInsets.only(bottom: 20)),
-            Padding(
-              padding: EdgeInsets.only(top: 40, left: 40, right: 40),
-              child: Text("Enter back image of CNIC",
-                  style: TextStyle(
-                      fontSize: 20,
-                      letterSpacing: 1.5,
-                      color: Colors.black54,
-                      fontWeight: FontWeight.bold)),
-            ),
-            SizedBox(
-              height: 32,
-            ),
-            Center(
-              child: GestureDetector(
-                onTap: () {
-                  showChoiceDialog(context, 3);
-                },
-                child: CircleAvatar(
-                  radius: 55,
-                  backgroundColor: Colors.black54,
-                  child: _cnicBack != null
-                      ? ClipRRect(
-                          borderRadius: BorderRadius.circular(50),
-                          child: Image.file(
-                            _cnicBack,
-                            width: MediaQuery.of(context).size.width / 2,
-                            height: MediaQuery.of(context).size.width / 2,
-                            fit: BoxFit.fitHeight,
-                          ),
-                        )
-                      : Container(
-                          decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(50)),
-                          width: 100,
-                          height: 100,
-                          child: Icon(
-                            Icons.camera_alt,
-                            color: Colors.grey[800],
-                          ),
-                        ),
-                ),
-              ),
-            ),
-            Padding(padding: EdgeInsets.only(bottom: 20)),
-            SizedBox(height: 30),
-            GestureDetector(
+          ),
+        ),
+        Padding(padding: EdgeInsets.only(bottom: 20)),
+        SizedBox(height: 30),
+        Consumer<UserViewModel>(
+          builder: (context, model, child) {
+            return GestureDetector(
               onTap: () async {
-                await createPersonalInfo();
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => MainTabs(
-                              isBuyer: false,
-                            )));
+                try {
+                  if (fNameController == null ||
+                      lNameController == null ||
+                      emailController == null ||
+                      addressController == null ||
+                      _profileImage == null ||
+                      _cnicFront == null ||
+                      _cnicBack == null) {
+                    throw CustomeExceptions("Some important field is null");
+                  }
+                  if (fNameController.text.length < 4) {
+                    throw CustomeExceptions(
+                        "First name length should 4 or more...");
+                  }
+                  if (lNameController.text.length < 4) {
+                    throw CustomeExceptions(
+                        "Last name length should 4 or more...");
+                  }
+                  if (addressController.text.length < 10) {
+                    throw CustomeExceptions(
+                        "Address should be greater than 10 words");
+                  }
+                  if (validateEmail(emailController.text) == false) {
+                    throw CustomeExceptions("Enter a valid Email");
+                  }
+                  await createPersonalInfo();
+                  bool status =
+                      await _firebaseService.checkSkill(_userModel.userId);
+                  if (status == true) {
+                    await updateSkill();
+                  } else {
+                    await mapskill();
+                  }
+                  await model.saveUser(_userModel);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => MainTabs(
+                                isBuyer: false,
+                              )));
+                } on CustomeExceptions catch (e) {
+                  return showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                            title: Text("Error Occured"),
+                            content: Text(e.error),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text('OK'),
+                              ),
+                            ],
+                          ));
+                }
               },
               child: AppButton(title: 'Save'),
-            ),
-            Padding(padding: EdgeInsets.only(bottom: 30)),
-          ],
-        ));
-      },
-    );
+            );
+          },
+        ),
+        Padding(padding: EdgeInsets.only(bottom: 30)),
+      ],
+    ));
   }
 }

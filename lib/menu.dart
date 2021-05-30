@@ -1,20 +1,29 @@
 import 'package:PROWORK/screens/onboarding.dart';
+import 'package:PROWORK/viewmodel/user_viewmodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MenuBar extends StatelessWidget {
   final _auth = FirebaseAuth.instance;
+  User user;
   @override
   Widget build(BuildContext context) {
+    user = _auth.currentUser;
     return ListView(
       children: [
-        UserAccountsDrawerHeader(
-          accountName: Text("User"),
-          accountEmail: Text("@gmail.com"),
-          currentAccountPicture: CircleAvatar(
-            backgroundColor: Colors.white70,
-            child: Text("T"),
-          ),
+        Consumer<UserViewModel>(
+          builder: (context, model, child) {
+            model.loadUser();
+            return UserAccountsDrawerHeader(
+              accountName: Text(model.user.profile["fname"].toString()),
+              accountEmail: Text("${user.phoneNumber}"),
+              currentAccountPicture: CircleAvatar(
+                foregroundImage:
+                    NetworkImage(model.user.profile["profileUrl"].toString()),
+              ),
+            );
+          },
         ),
         ListTile(
           leading: Icon(Icons.home),
@@ -48,14 +57,29 @@ class MenuBar extends StatelessWidget {
           trailing: Icon(Icons.arrow_right),
         ),
         Divider(),
-        ListTile(
+        Consumer<UserViewModel>(
+          builder: (context, model, child) {
+            return ListTile(
+                leading: Icon(Icons.logout),
+                title: Text("Logout"),
+                onTap: () async {
+                  await _auth.signOut();
+                  model.clearStorage();
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => OnboardingScreen()));
+                });
+          },
+        ),
+        /*ListTile(
             leading: Icon(Icons.logout),
             title: Text("Logout"),
             onTap: () async {
               await _auth.signOut();
               Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) => OnboardingScreen()));
-            }),
+            }),*/
       ],
     );
   }
