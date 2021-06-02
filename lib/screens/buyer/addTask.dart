@@ -1,6 +1,8 @@
 import 'package:PROWORK/model/model_category.dart';
 import 'package:PROWORK/style/appColors.dart';
+import 'package:PROWORK/utills/appConstraints.dart';
 import 'package:PROWORK/viewmodel/category_viewmodel.dart';
+import 'package:PROWORK/widgets/appInputField.dart';
 import 'package:PROWORK/widgets/appPrimaryButton.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,6 +33,17 @@ class _AddTaskState extends State<AddTask> {
         padding: const EdgeInsets.all(8.0),
         children: [
           Text(
+            "Title",
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+          ),
+          AppCustomInputField(
+            labelText: AppConstants.taskTitleLabel,
+            height: MediaQuery.of(context).size.height / 15.0,
+            maxLines: 2,
+            hasValidation: true,
+          ),
+          SizedBox(height: 10),
+          Text(
             "What Service Are You Looking For?",
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
           ),
@@ -41,23 +54,13 @@ class _AddTaskState extends State<AddTask> {
             "Describe the service you are looking for - please be as detailed as possible:",
             style: TextStyle(fontSize: 18, color: AppColors.grey800),
           ),
-          Container(
-            padding: const EdgeInsets.all(5.0),
+          AppCustomInputField(
+            labelText: AppConstants
+                .taskDesLabel, // This label is for validation purpose
+            hintText: 'Type here...',
             height: MediaQuery.of(context).size.height / 3.0,
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(5.0)),
-            child: TextField(
-              //autofocus: true,
-              cursorHeight: 25.0,
-              cursorColor: AppColors.blueColorGoogle,
-              style: TextStyle(fontSize: 18),
-              textAlignVertical: TextAlignVertical.center,
-              maxLines: 15,
-              enabled: true,
-              decoration: InputDecoration(
-                  border: InputBorder.none, hintText: 'Type here..'),
-            ),
+            maxLines: 15,
+            hasValidation: true,
           ),
           SizedBox(
             height: 10,
@@ -158,25 +161,13 @@ class _AddTaskState extends State<AddTask> {
           SizedBox(
             height: 5,
           ),
-          Container(
-            padding: const EdgeInsets.all(5.0),
-            height: MediaQuery.of(context).size.height / 15,
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(5.0)),
-            child: TextField(
-              //autofocus: true,
-              cursorHeight: 25.0,
-              cursorColor: AppColors.blueColorGoogle,
-              style: TextStyle(fontSize: 18),
-              textAlignVertical: TextAlignVertical.center,
-              maxLines: 1,
-              enabled: true,
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: 'Type here..',
-                  prefixIcon: Icon(Icons.money)),
-            ),
+          AppCustomInputField(
+            labelText: AppConstants
+                .taskBudgetLabel, //This label is for validation purpose
+            // hintText: 'Type here...',
+            height: MediaQuery.of(context).size.height / 15.0,
+            hasValidation: true,
+            prefixIcon: Icon(Icons.money),
           ),
           SizedBox(
             height: 10,
