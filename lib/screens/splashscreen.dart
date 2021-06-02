@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
       () {
         if (_user == null && exist == true) {
           Navigator.pushReplacementNamed(context, '/onboarding');
-        } else if (_user != null && exist == true) {
+        } else if (_user != null && exist == false) {
           Navigator.pushReplacementNamed(context, '/onboarding');
         } else {
           Navigator.pushReplacement(

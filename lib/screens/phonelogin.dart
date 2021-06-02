@@ -43,7 +43,7 @@ class _Phoneloginpage extends State<Phoneloginpage> {
                             elevation: 7.0,
                             borderRadius: BorderRadius.circular(15.0),
                             child: TextField(
-                              controller: controller,
+                              controller: controller..text = "+92",
                               autofocus: true,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
