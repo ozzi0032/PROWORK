@@ -13,6 +13,7 @@ class AppCustomInputField extends StatefulWidget {
   final TextInputType keyboardType;
   final int maxLines;
   final bool hasValidation;
+  final bool hasPrefix;
   final Widget prefixIcon;
   AppCustomInputField(
       {@required this.labelText,
@@ -25,6 +26,7 @@ class AppCustomInputField extends StatefulWidget {
       this.keyboardType = TextInputType.text,
       this.maxLines = 1,
       this.hasValidation = false,
+      this.hasPrefix = false,
       this.prefixIcon});
   @override
   _AppCustomInputFieldState createState() => _AppCustomInputFieldState();
@@ -57,7 +59,7 @@ class _AppCustomInputFieldState extends State<AppCustomInputField> {
           decoration: InputDecoration(
               border: InputBorder.none,
               hintText: widget.hintText,
-              prefixIcon: widget.prefixIcon)),
+              prefixIcon: widget.hasPrefix ? widget.prefixIcon : Container())),
     );
   }
 
