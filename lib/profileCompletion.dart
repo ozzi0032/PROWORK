@@ -21,11 +21,11 @@ class UserProfileCompletion extends StatefulWidget {
   UserProfileCompletion({this.phoneNumber, this.isBuyer});
   @override
   State<StatefulWidget> createState() {
-    return _ServiceProviderP();
+    return _UserProfileCompletionState();
   }
 }
 
-class _ServiceProviderP extends State<UserProfileCompletion> {
+class _UserProfileCompletionState extends State<UserProfileCompletion> {
   bool isLoading = false;
   var selectedVal;
   var _skill;
