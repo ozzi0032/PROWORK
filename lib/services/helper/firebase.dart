@@ -1,4 +1,5 @@
 import 'package:PROWORK/model/model_category.dart';
+import 'package:PROWORK/model/model_task.dart';
 import 'package:PROWORK/services/index.dart';
 import 'package:PROWORK/utills/appConstraints.dart';
 import 'package:PROWORK/utills/sharedPrefs.dart';
@@ -11,6 +12,7 @@ class FirebaseService implements BaseServices {
   static final FirebaseService _instance = FirebaseService._internal();
   factory FirebaseService() => _instance;
   FirebaseService._internal();
+
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   List<CategoryModel> categories = [];
@@ -30,6 +32,16 @@ class FirebaseService implements BaseServices {
       return list;
     } catch (e) {
       return [];
+    }
+  }
+
+  @override
+  Future<void> addTask(TaskModel taskModel) async {
+    try {
+      DocumentReference dr = _firebaseFirestore.collection('Task').doc();
+      await dr.set(taskModel.toJSON(taskModel));
+    } on FirebaseException catch (e) {
+      return null;
     }
   }
 
