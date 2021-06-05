@@ -1,8 +1,8 @@
-import 'package:PROWORK/model/model_user.dart';
+import 'package:PROWORK/service_locator.dart';
 import 'package:PROWORK/tabbar.dart';
+import 'package:PROWORK/utills/sharedPrefs.dart';
 import 'package:PROWORK/viewmodel/category_viewmodel.dart';
 import 'package:PROWORK/viewmodel/user_viewmodel.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -16,64 +16,63 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  FirebaseAuth _auth;
-  User _user;
-  bool exist = false;
+  final UserViewModel userViewModel = serviceLocator<UserViewModel>();
+  bool isLoggedIn = false;
   timer() async {
-    var _duration = Duration(seconds: 3);
+    var _duration = Duration(seconds: 4);
     return Timer(
       _duration,
       () {
-        if (_user == null && exist == true) {
-          Navigator.pushReplacementNamed(context, '/onboarding');
-        } else if (_user != null && exist == false) {
-          Navigator.pushReplacementNamed(context, '/onboarding');
-        } else {
+        if (isLoggedIn &&
+            userViewModel.user != null &&
+            userViewModel.user.roleType == 'buyer') {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => MainTabs(
+                        isBuyer: true,
+                      )));
+        } else if (isLoggedIn &&
+            userViewModel.user != null &&
+            userViewModel.user.roleType == 'provider') {
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                   builder: (_) => MainTabs(
                         isBuyer: false,
                       )));
+        } else {
+          Navigator.pushReplacementNamed(context, '/onboarding');
         }
-        //Navigator.pushReplacementNamed(context, '/onboarding');
       },
     );
   }
 
   loadInitData() async {
+    isLoggedIn = await SharedPrefs.getLoginStatus();
+    await userViewModel.loadUser();
     Provider.of<CategoryViewModel>(context, listen: false).getCategories();
   }
 
   @override
   void initState() {
     super.initState();
-    _auth = FirebaseAuth.instance;
-    _user = _auth.currentUser;
-    timer();
     loadInitData();
+    timer();
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color(0xffffffff),
-        body: Center(
-          child: Container(
+      backgroundColor: const Color(0xffffffff),
+      body: Center(
+        child: Container(
             height: MediaQuery.of(context).size.height / 2,
             width: MediaQuery.of(context).size.width,
-            child: Consumer<UserViewModel>(
-              builder: (context, model, child) {
-                model.loadUser();
-                if (model.user == null) {
-                  exist = true;
-                }
-                return Image(
-                  image: AssetImage('assets/images/app_logo.png'),
-                  fit: BoxFit.fill,
-                );
-              },
-            ),
-          ),
-        ));
+            child: Image(
+              image: AssetImage('assets/images/app_logo.png'),
+              fit: BoxFit.fill,
+            )),
+      ),
+    );
   }
 }

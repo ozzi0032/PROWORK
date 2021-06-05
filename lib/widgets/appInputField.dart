@@ -36,6 +36,7 @@ class _AppCustomInputFieldState extends State<AppCustomInputField> {
     return Container(
       padding: const EdgeInsets.all(5.0),
       height: widget.height,
+      width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
           border: Border.all(color: Colors.grey),
           borderRadius: BorderRadius.circular(5.0)),
