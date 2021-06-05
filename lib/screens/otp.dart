@@ -1,9 +1,8 @@
-import 'package:PROWORK/tabbar.dart';
 import 'package:PROWORK/viewmodel/user_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:PROWORK/widgets/appPrimaryButton.dart';
 import 'package:provider/provider.dart';
-import '../serviceproviderprofile.dart';
+import '../profileCompletion.dart';
 
 class OtpScreen extends StatefulWidget {
   final args;
@@ -272,11 +271,10 @@ class _OtpScreenState extends State<OtpScreen> {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => widget.args['isBuyer']
-                                    ? MainTabs(isBuyer: widget.args['isBuyer'])
-                                    : ServiceProviderP(
-                                        phoneNumber: widget.args['phoneNumber'],
-                                      )));
+                                builder: (context) => UserProfileCompletion(
+                                      phoneNumber: widget.args['phoneNumber'],
+                                      isBuyer: widget.args['isBuyer'],
+                                    )));
                       }).onError((error, stackTrace) {
                         //showToast(error.toString(), Colors.red);
                         print('OTP ERROR => || ' + error.toString());

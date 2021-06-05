@@ -36,12 +36,12 @@ class _AddTaskState extends State<AddTask> {
             "Title",
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
           ),
-          AppCustomInputField(
-            labelText: AppConstants.taskTitleLabel,
-            height: MediaQuery.of(context).size.height / 15.0,
-            maxLines: 2,
-            hasValidation: true,
-          ),
+          // AppCustomInputField(
+          //   labelText: AppConstants.taskTitleLabel,
+          //   height: MediaQuery.of(context).size.height / 15.0,
+          //   maxLines: 2,
+          //   hasValidation: true,
+          // ),
           SizedBox(height: 10),
           Text(
             "What Service Are You Looking For?",
@@ -54,14 +54,14 @@ class _AddTaskState extends State<AddTask> {
             "Describe the service you are looking for - please be as detailed as possible:",
             style: TextStyle(fontSize: 18, color: AppColors.grey800),
           ),
-          AppCustomInputField(
-            labelText: AppConstants
-                .taskDesLabel, // This label is for validation purpose
-            hintText: 'Type here...',
-            height: MediaQuery.of(context).size.height / 3.0,
-            maxLines: 15,
-            hasValidation: true,
-          ),
+          // AppCustomInputField(
+          //   labelText: AppConstants
+          //       .taskDesLabel, // This label is for validation purpose
+          //   hintText: 'Type here...',
+          //   height: MediaQuery.of(context).size.height / 3.0,
+          //   maxLines: 15,
+          //   hasValidation: true,
+          // ),
           SizedBox(
             height: 10,
           ),
@@ -161,14 +161,14 @@ class _AddTaskState extends State<AddTask> {
           SizedBox(
             height: 5,
           ),
-          AppCustomInputField(
-            labelText: AppConstants
-                .taskBudgetLabel, //This label is for validation purpose
-            // hintText: 'Type here...',
-            height: MediaQuery.of(context).size.height / 15.0,
-            hasValidation: true,
-            prefixIcon: Icon(Icons.money),
-          ),
+          // AppCustomInputField(
+          //   labelText: AppConstants
+          //       .taskBudgetLabel, //This label is for validation purpose
+          //   // hintText: 'Type here...',
+          //   height: MediaQuery.of(context).size.height / 15.0,
+          //   hasValidation: true,
+          //   prefixIcon: Icon(Icons.money),
+          // ),
           SizedBox(
             height: 10,
           ),
