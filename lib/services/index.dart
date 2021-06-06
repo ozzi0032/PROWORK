@@ -23,6 +23,6 @@ class Services implements BaseServices {
 
   @override
   Future<void> addTask(TaskModel taskModel) async {
-    baseServices.addTask(taskModel);
+    return baseServices.addTask(taskModel);
   }
 }

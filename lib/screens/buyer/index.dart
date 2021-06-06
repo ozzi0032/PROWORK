@@ -15,8 +15,8 @@ class _BuyerHomeFragmentState extends State<BuyerHomeFragment> {
       floatingActionButton: FloatingActionButton.extended(
           backgroundColor: AppColors.blueColorGoogle,
           onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => AddTask()));
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => AddTask()));
           },
           label: Row(
             children: [

@@ -7,10 +7,11 @@ import '../utills/date_time_utils.dart';
 
 class TaskViewModel extends ChangeNotifier {
   final Services _service = Services();
-  final UserViewModel userViewModel = serviceLocator<UserViewModel>();
+  //To access the registered objects call get<Type>() on your GetIt instance
+  final userViewModel = serviceLocator.get<UserViewModel>();
 
-  bool isLoading;
-  String message;
+  bool isLoading = false;
+  String message = 'message';
 
   Future<void> addTask(TaskModel taskModel) async {
     taskModel.employerId = userViewModel.user.userId;
@@ -19,9 +20,10 @@ class TaskViewModel extends ChangeNotifier {
         'unassigned'; //Initially the task added will be unassigned
 
     //Format the current time for task creation time
-    taskModel.createdDate = DateTimeUtils.format(
-        int.parse(DateTime.now().toString()),
-        DateTimeFormatConstants.dMMMyyyyHHmmFormatEN);
+    taskModel.createdDate = DateTime.now().toString();
+    // DateTimeUtils.format(
+    //     int.parse(DateTime.now().toString()),
+    //     DateTimeFormatConstants.eEEEdMMMMyFormat);
 
     try {
       isLoading = true;

@@ -23,9 +23,9 @@ class _AddTaskState extends State<AddTask> {
   List<DropdownMenuItem<CategoryModel>> _catDropdownMenuItems;
   List<DropdownMenuItem<CategoryModel>> _subCatDropdownMenuItems;
 
-  TextEditingController _titleController;
-  TextEditingController _descriptionController;
-  TextEditingController _moneyController;
+  TextEditingController _titleController = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
+  TextEditingController _moneyController = TextEditingController();
 
   int daysCount = 0;
 
@@ -66,12 +66,16 @@ class _AddTaskState extends State<AddTask> {
                         style: TextStyle(
                             fontSize: 24, fontWeight: FontWeight.w500),
                       ),
-                      AppCustomInputField(
-                        controller: _titleController,
-                        labelText: AppConstants.taskTitleLabel,
+                      Container(
+                        padding: const EdgeInsets.all(5.0),
                         height: MediaQuery.of(context).size.height / 15.0,
-                        maxLines: 2,
-                        hasValidation: true,
+                        width: MediaQuery.of(context).size.width,
+                        child: AppCustomInputField(
+                          controller: _titleController,
+                          labelText: AppConstants.taskTitleLabel,
+                          maxLines: 2,
+                          hasValidation: true,
+                        ),
                       ),
                       SizedBox(height: 10),
                       Text(
@@ -87,14 +91,18 @@ class _AddTaskState extends State<AddTask> {
                         style:
                             TextStyle(fontSize: 18, color: AppColors.grey800),
                       ),
-                      AppCustomInputField(
-                        controller: _descriptionController,
-                        labelText: AppConstants
-                            .taskDesLabel, // This label is for validation purpose
-                        hintText: 'Type here...',
+                      Container(
+                        padding: const EdgeInsets.all(5.0),
                         height: MediaQuery.of(context).size.height / 3.0,
-                        maxLines: 15,
-                        hasValidation: true,
+                        width: MediaQuery.of(context).size.width,
+                        child: AppCustomInputField(
+                          controller: _descriptionController,
+                          labelText: AppConstants
+                              .taskDesLabel, // This label is for validation purpose
+                          hintText: 'Type here...',
+                          maxLines: 15,
+                          hasValidation: true,
+                        ),
                       ),
                       SizedBox(
                         height: 10,
@@ -206,16 +214,19 @@ class _AddTaskState extends State<AddTask> {
                       SizedBox(
                         height: 5,
                       ),
-                      AppCustomInputField(
-                        controller: _moneyController,
-                        labelText: AppConstants
-                            .taskBudgetLabel, //This label is for validation purpose
-                        // hintText: 'Type here...',
+                      Container(
+                        padding: const EdgeInsets.all(5.0),
                         height: MediaQuery.of(context).size.height / 15.0,
-                        keyboardType: TextInputType.number,
-                        hasValidation: true,
-                        hasPrefix: true,
-                        prefixIcon: Icon(Icons.money),
+                        width: MediaQuery.of(context).size.width,
+                        child: AppCustomInputField(
+                          controller: _moneyController,
+                          labelText: AppConstants
+                              .taskBudgetLabel, //This label is for validation purpose
+                          keyboardType: TextInputType.number,
+                          hasValidation: true,
+                          hasPrefix: true,
+                          prefixIcon: Icon(Icons.money),
+                        ),
                       ),
                       SizedBox(
                         height: 10,
