@@ -16,7 +16,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final UserViewModel userViewModel = serviceLocator<UserViewModel>();
+  final userViewModel = serviceLocator.get<UserViewModel>();
   bool isLoggedIn = false;
   timer() async {
     var _duration = Duration(seconds: 4);
