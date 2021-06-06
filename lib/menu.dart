@@ -16,11 +16,10 @@ class MenuBar extends StatelessWidget {
           builder: (context, model, child) {
             model.loadUser();
             return UserAccountsDrawerHeader(
-              accountName: Text(model.user.profile["fname"].toString()),
+              accountName: Text(model.user.fname.toString()),
               accountEmail: Text("${user.phoneNumber}"),
               currentAccountPicture: CircleAvatar(
-                foregroundImage:
-                    NetworkImage(model.user.profile["profileUrl"].toString()),
+                foregroundImage: NetworkImage(model.user.profileUrl.toString()),
               ),
             );
           },
