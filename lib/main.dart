@@ -6,6 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'router.dart';
 import 'viewmodel/category_viewmodel.dart';
+import 'viewmodel/task_viewmodel.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +19,9 @@ void main() async {
       ),
       ChangeNotifierProvider(
         create: (_) => CategoryViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (_) => TaskViewModel(),
       ),
     ],
     child: MyApp(),
