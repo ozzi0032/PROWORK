@@ -86,10 +86,13 @@ class _OtpScreenState extends State<OtpScreen> {
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-                    child: Text(
-                      'Enter 6 digits verification code sent to your number',
-                      style: TextStyle(
-                          fontSize: 30.0, fontWeight: FontWeight.bold),
+                    child: FittedBox(
+                      fit: BoxFit.fitHeight,
+                      child: Text(
+                        'Enter 6 digits verification code sent to your number',
+                        style: TextStyle(
+                            fontSize: 30.0, fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                   SizedBox(height: 30),

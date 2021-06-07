@@ -1,3 +1,4 @@
+import 'package:PROWORK/utills/exceptions.dart';
 import 'package:PROWORK/viewmodel/user_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:PROWORK/widgets/appPrimaryButton.dart';
@@ -28,11 +29,13 @@ class _Phoneloginpage extends State<Phoneloginpage> {
             : Column(
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.fromLTRB(0.0, 0.0, 140.0, 0.0),
-                    child: Text(
-                      'Enter your\nphone number',
-                      style: TextStyle(
-                          fontSize: 50.0, fontWeight: FontWeight.bold),
+                    padding: EdgeInsets.fromLTRB(0.0, 0.0, /*140.0*/ 0.0, 0.0),
+                    child: FittedBox(
+                      child: Text(
+                        'Enter your phone number',
+                        style: TextStyle(
+                            fontSize: 35.0, fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                   SizedBox(height: 30),
@@ -55,13 +58,31 @@ class _Phoneloginpage extends State<Phoneloginpage> {
                   SizedBox(height: 40),
                   GestureDetector(
                     onTap: () async {
-                      final phone = controller.text.trim();
-                      await model.initOTP(phone).then((_) {
-                        Navigator.pushNamed(context, '/otp', arguments: {
-                          'isBuyer': widget.args['isBuyer'],
-                          'phoneNumber': phone,
-                        });
-                      }).onError((error, stackTrace) => null);
+                      try {
+                        if (controller.text.length != 13) {
+                          throw CustomeExceptions("Phone number is not valid!");
+                        }
+                        final phone = controller.text.trim();
+                        await model.initOTP(phone).then((_) {
+                          Navigator.pushNamed(context, '/otp', arguments: {
+                            'isBuyer': widget.args['isBuyer'],
+                            'phoneNumber': phone,
+                          });
+                        }).onError((error, stackTrace) => null);
+                      } on CustomeExceptions catch (e) {
+                        return showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                                  title: Text("Error Occured"),
+                                  content: Text(e.error),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: Text('OK'),
+                                    ),
+                                  ],
+                                ));
+                      }
                     },
                     child: AppButton(title: 'NEXT STEP'),
                   )

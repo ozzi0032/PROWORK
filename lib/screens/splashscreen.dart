@@ -1,4 +1,6 @@
+import 'package:PROWORK/profileSubmitted.dart';
 import 'package:PROWORK/service_locator.dart';
+import 'package:PROWORK/services/helper/firebase.dart';
 import 'package:PROWORK/tabbar.dart';
 import 'package:PROWORK/utills/sharedPrefs.dart';
 import 'package:PROWORK/viewmodel/category_viewmodel.dart';
@@ -17,12 +19,13 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final UserViewModel userViewModel = serviceLocator<UserViewModel>();
+  FirebaseService _firebaseService = new FirebaseService();
   bool isLoggedIn = false;
   timer() async {
-    var _duration = Duration(seconds: 4);
+    var _duration = Duration(seconds: 2);
     return Timer(
       _duration,
-      () {
+      () async {
         if (isLoggedIn &&
             userViewModel.user != null &&
             userViewModel.user.roleType == 'buyer') {
@@ -35,12 +38,21 @@ class _SplashScreenState extends State<SplashScreen> {
         } else if (isLoggedIn &&
             userViewModel.user != null &&
             userViewModel.user.roleType == 'provider') {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (_) => MainTabs(
-                        isBuyer: false,
-                      )));
+          if (userViewModel.user.status == "pending") {
+            if (await _firebaseService.checkProviderStatus(
+                    userViewModel.user.userId.toString()) ==
+                false) {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (_) => ProfileSubmitted()));
+            } else {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => MainTabs(
+                            isBuyer: false,
+                          )));
+            }
+          }
         } else {
           Navigator.pushReplacementNamed(context, '/onboarding');
         }
