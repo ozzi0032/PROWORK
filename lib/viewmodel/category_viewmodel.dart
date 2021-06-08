@@ -52,6 +52,7 @@ class CategoryViewModel extends ChangeNotifier {
               "please contact admin for fixing the issues " +
           error.toString();
       isLoading = false;
+      notifyListeners();
     }
   }
 

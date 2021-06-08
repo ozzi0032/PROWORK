@@ -1,7 +1,9 @@
 import 'package:PROWORK/model/model_category.dart';
+import 'package:PROWORK/model/model_task.dart';
 import 'package:PROWORK/style/appColors.dart';
 import 'package:PROWORK/utills/appConstraints.dart';
 import 'package:PROWORK/viewmodel/category_viewmodel.dart';
+import 'package:PROWORK/viewmodel/task_viewmodel.dart';
 import 'package:PROWORK/widgets/appInputField.dart';
 import 'package:PROWORK/widgets/appPrimaryButton.dart';
 import 'package:flutter/material.dart';
@@ -13,11 +15,31 @@ class AddTask extends StatefulWidget {
 }
 
 class _AddTaskState extends State<AddTask> {
+  final _formKey = GlobalKey<FormState>();
+
   bool _subCatVisiblity = false;
   CategoryModel _catSelectedItem;
   CategoryModel _subCatSelectedItem;
   List<DropdownMenuItem<CategoryModel>> _catDropdownMenuItems;
   List<DropdownMenuItem<CategoryModel>> _subCatDropdownMenuItems;
+
+  TextEditingController _titleController = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
+  TextEditingController _moneyController = TextEditingController();
+
+  int daysCount = 0;
+
+  daysIncrement() {
+    setState(() {
+      ++daysCount;
+    });
+  }
+
+  daysDecrement() {
+    setState(() {
+      --daysCount;
+    });
+  }
 
   @override
   void initState() {
@@ -28,156 +50,221 @@ class _AddTaskState extends State<AddTask> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Add Task")),
-      body: ListView(
-        padding: const EdgeInsets.all(8.0),
-        children: [
-          Text(
-            "Title",
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
-          ),
-          // AppCustomInputField(
-          //   labelText: AppConstants.taskTitleLabel,
-          //   height: MediaQuery.of(context).size.height / 15.0,
-          //   maxLines: 2,
-          //   hasValidation: true,
-          // ),
-          SizedBox(height: 10),
-          Text(
-            "What Service Are You Looking For?",
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            "Describe the service you are looking for - please be as detailed as possible:",
-            style: TextStyle(fontSize: 18, color: AppColors.grey800),
-          ),
-          // AppCustomInputField(
-          //   labelText: AppConstants
-          //       .taskDesLabel, // This label is for validation purpose
-          //   hintText: 'Type here...',
-          //   height: MediaQuery.of(context).size.height / 3.0,
-          //   maxLines: 15,
-          //   hasValidation: true,
-          // ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            "Choose a category:",
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Container(
-              height: 50.0,
-              padding: const EdgeInsets.all(5.0),
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(5.0)),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton(
-                  hint: Text("Select a category"),
-                  value: _catSelectedItem,
-                  items: _catDropdownMenuItems,
-                  onChanged: (value) {
-                    setState(() {
-                      _catSelectedItem = value;
-                      _subCatDropdownMenuItems =
-                          buildSubCatDropdownMenuItems(value);
-                      _subCatVisiblity = true;
-                    });
-                  },
+        appBar: AppBar(title: Text("Add Task")),
+        body: Consumer<TaskViewModel>(
+          builder: (context, model, child) => model.isLoading
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Form(
+                  key: _formKey,
+                  child: ListView(
+                    padding: const EdgeInsets.all(8.0),
+                    children: [
+                      Text(
+                        "Title",
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.w500),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(5.0),
+                        height: MediaQuery.of(context).size.height / 15.0,
+                        width: MediaQuery.of(context).size.width,
+                        child: AppCustomInputField(
+                          controller: _titleController,
+                          labelText: AppConstants.taskTitleLabel,
+                          maxLines: 2,
+                          hasValidation: true,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        "What Service Are You Looking For?",
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.w500),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Describe the service you are looking for - please be as detailed as possible:",
+                        style:
+                            TextStyle(fontSize: 18, color: AppColors.grey800),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(5.0),
+                        height: MediaQuery.of(context).size.height / 3.0,
+                        width: MediaQuery.of(context).size.width,
+                        child: AppCustomInputField(
+                          controller: _descriptionController,
+                          labelText: AppConstants
+                              .taskDesLabel, // This label is for validation purpose
+                          hintText: 'Type here...',
+                          maxLines: 15,
+                          hasValidation: true,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Choose a category:",
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.w500),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                          height: 50.0,
+                          padding: const EdgeInsets.all(5.0),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5.0)),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                              hint: Text("Select a category"),
+                              value: _catSelectedItem,
+                              items: _catDropdownMenuItems,
+                              onChanged: (value) {
+                                setState(() {
+                                  _catSelectedItem = value;
+                                  _subCatDropdownMenuItems =
+                                      buildSubCatDropdownMenuItems(value);
+                                  _subCatVisiblity = true;
+                                });
+                              },
+                            ),
+                          )),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Visibility(
+                          visible: _subCatVisiblity,
+                          child: Container(
+                              height: 50.0,
+                              padding: const EdgeInsets.all(5.0),
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(5.0)),
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                  hint: Text("Select sub-category"),
+                                  value: _subCatSelectedItem,
+                                  items: _subCatDropdownMenuItems,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _subCatSelectedItem = value;
+                                    });
+                                  },
+                                ),
+                              ))),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Once you add your task, when would you like your task completed?",
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.w500),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Days',
+                            style: TextStyle(fontSize: 24),
+                          ),
+                          Container(
+                            //padding: const EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5.0)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                IconButton(
+                                    icon: Icon(Icons.remove),
+                                    onPressed: () {
+                                      daysDecrement();
+                                    }),
+                                Text(
+                                  '$daysCount',
+                                ),
+                                IconButton(
+                                    icon: Icon(Icons.add),
+                                    onPressed: () {
+                                      daysIncrement();
+                                    }),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "What is your budget for this service?",
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.w500),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(5.0),
+                        height: MediaQuery.of(context).size.height / 15.0,
+                        width: MediaQuery.of(context).size.width,
+                        child: AppCustomInputField(
+                          controller: _moneyController,
+                          labelText: AppConstants
+                              .taskBudgetLabel, //This label is for validation purpose
+                          keyboardType: TextInputType.number,
+                          hasValidation: true,
+                          hasPrefix: true,
+                          prefixIcon: Icon(Icons.money),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          if (_formKey.currentState.validate()) {
+                            await model
+                                .addTask(TaskModel(
+                                    title: _titleController.text,
+                                    description: _descriptionController.text,
+                                    price: double.parse(_moneyController.text),
+                                    category: [
+                                      _catSelectedItem.id,
+                                      _subCatSelectedItem.id
+                                    ],
+                                    timeAllocated: '$daysCount' + ' days'))
+                                .then((_) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(model.message)));
+                            }).onError((error, stackTrace) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(model.message)));
+                            });
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content:
+                                    Text('Please provide valid information!')));
+                          }
+                        },
+                        child: AppButton(
+                          title: 'Add Task',
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              )),
-          SizedBox(
-            height: 5,
-          ),
-          Visibility(
-              visible: _subCatVisiblity,
-              child: Container(
-                  height: 50.0,
-                  padding: const EdgeInsets.all(5.0),
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(5.0)),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton(
-                      hint: Text("Select sub-category"),
-                      value: _subCatSelectedItem,
-                      items: _subCatDropdownMenuItems,
-                      onChanged: (value) {
-                        setState(() {
-                          _subCatSelectedItem = value;
-                        });
-                      },
-                    ),
-                  ))),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            "Once you add your task, when would you like your task completed?",
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Days',
-                style: TextStyle(fontSize: 24),
-              ),
-              Container(
-                //padding: const EdgeInsets.all(2),
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(5.0)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    IconButton(icon: Icon(Icons.add), onPressed: () {}),
-                    Text(
-                      'Count',
-                    ),
-                    IconButton(icon: Icon(Icons.remove), onPressed: () {}),
-                  ],
-                ),
-              )
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            "What is your budget for this service?",
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          // AppCustomInputField(
-          //   labelText: AppConstants
-          //       .taskBudgetLabel, //This label is for validation purpose
-          //   // hintText: 'Type here...',
-          //   height: MediaQuery.of(context).size.height / 15.0,
-          //   hasValidation: true,
-          //   prefixIcon: Icon(Icons.money),
-          // ),
-          SizedBox(
-            height: 10,
-          ),
-          AppButton(
-            title: 'Add Task',
-          )
-        ],
-      ),
-    );
+        ));
   }
 
   renderDropdownButtons() {

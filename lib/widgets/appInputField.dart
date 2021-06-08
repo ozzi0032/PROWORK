@@ -13,6 +13,7 @@ class AppCustomInputField extends StatefulWidget {
   final TextInputType keyboardType;
   final int maxLines;
   final bool hasValidation;
+  final bool hasPrefix;
   final Widget prefixIcon;
   AppCustomInputField(
       {@required this.labelText,
@@ -25,6 +26,7 @@ class AppCustomInputField extends StatefulWidget {
       this.keyboardType = TextInputType.text,
       this.maxLines = 1,
       this.hasValidation = false,
+      this.hasPrefix = false,
       this.prefixIcon});
   @override
   _AppCustomInputFieldState createState() => _AppCustomInputFieldState();
@@ -33,43 +35,50 @@ class AppCustomInputField extends StatefulWidget {
 class _AppCustomInputFieldState extends State<AppCustomInputField> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(5.0),
-      height: widget.height,
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(5.0)),
-      child: TextFormField(
-          controller: widget.controller,
-          obscureText: widget.obscure,
-          keyboardType: widget.keyboardType,
-          cursorHeight: 25.0,
-          cursorColor: AppColors.blueColorGoogle,
-          style: TextStyle(fontSize: 18),
-          textAlignVertical: TextAlignVertical.center,
-          maxLines: widget.maxLines,
-          validator: (val) {
-            return widget.hasValidation
-                ? getValidatorMsg(widget.labelText, val)
-                : null;
-          },
-          decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: widget.hintText,
-              prefixIcon: widget.prefixIcon)),
-    );
+    return
+        // Container(
+        //   //padding: const EdgeInsets.all(5.0),
+        //   height: widget.height,
+        //   width: MediaQuery.of(context).size.width,
+        //   decoration: BoxDecoration(
+        //       border: Border.all(color: Colors.grey),
+        //       borderRadius: BorderRadius.circular(5.0)),
+        //   child:
+        TextFormField(
+            controller: widget.controller,
+            obscureText: widget.obscure,
+            keyboardType: widget.keyboardType,
+            cursorHeight: 25.0,
+            cursorColor: AppColors.blueColorGoogle,
+            style: TextStyle(fontSize: 18),
+            textInputAction: TextInputAction.next,
+            textDirection: TextDirection.ltr,
+            textAlign: TextAlign.start,
+            maxLines: widget.maxLines,
+            validator: (val) {
+              return widget.hasValidation
+                  ? getValidatorMsg(widget.labelText, val)
+                  : null;
+            },
+            decoration: InputDecoration(
+                border: OutlineInputBorder(
+                    borderSide: BorderSide(color: AppColors.blueColorGoogle),
+                    borderRadius: BorderRadius.circular(5.0)),
+                hintText: widget.hintText,
+                prefixIcon:
+                    widget.hasPrefix ? widget.prefixIcon : Container()));
+    //);
   }
 
   getValidatorMsg(String t, String value) {
     switch (t) {
       case AppConstants.taskTitleLabel:
-        return value.length < 15
+        return value.length < 8
             ? AppConstants.taskTitleValidationMessage
             : null;
         break;
       case AppConstants.taskDesLabel:
-        return value.length < 40 ? AppConstants.taskDesValidationMessage : null;
+        return value.length < 10 ? AppConstants.taskDesValidationMessage : null;
         break;
       case AppConstants.taskBudgetLabel:
         return value.length < 1

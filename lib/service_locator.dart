@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 
 GetIt serviceLocator = GetIt.instance;
 void setupServiceLocator() {
-  serviceLocator.registerFactory<CategoryViewModel>(() => CategoryViewModel());
-  serviceLocator.registerFactory<UserViewModel>(() => UserViewModel());
+  serviceLocator.registerSingleton<UserViewModel>(UserViewModel());
+  serviceLocator
+      .registerLazySingleton<CategoryViewModel>(() => CategoryViewModel());
 }
