@@ -1,10 +1,12 @@
 import 'package:PROWORK/model/model_category.dart';
 import 'package:PROWORK/model/model_task.dart';
+import 'package:PROWORK/model/model_user.dart';
 import 'package:PROWORK/services/helper/firebase.dart';
 
 abstract class BaseServices {
   Future<List<CategoryModel>> getCategories();
   Future<void> addTask(TaskModel taskModel);
+  Future<List<TaskModel>> getTask(UserModel userModel);
 }
 
 class Services implements BaseServices {
@@ -24,5 +26,10 @@ class Services implements BaseServices {
   @override
   Future<void> addTask(TaskModel taskModel) async {
     return baseServices.addTask(taskModel);
+  }
+
+  @override
+  Future<List<TaskModel>> getTask(UserModel userModel) async {
+    return baseServices.getTask(userModel);
   }
 }

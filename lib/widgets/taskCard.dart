@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
 
 class TaskCard extends StatelessWidget {
+  final String imageUrl;
+  final String userName;
+  final String taskTitle;
+  final String taskStatus;
+  final String createdDate;
+  TaskCard(
+      {this.imageUrl,
+      this.userName,
+      this.taskTitle,
+      this.taskStatus,
+      this.createdDate});
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -23,13 +34,14 @@ class TaskCard extends StatelessWidget {
                     child: CircleAvatar(
                       backgroundColor: Colors.orange,
                       maxRadius: 25,
+                      foregroundImage: NetworkImage(imageUrl),
                     ),
                   ),
                   SizedBox(
                     width: 10,
                   ),
                   Text(
-                    "User Name",
+                    userName,
                     style: TextStyle(
                       fontSize: 22,
                     ),
@@ -39,13 +51,13 @@ class TaskCard extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              Text("This is task title"),
+              Text(taskTitle),
               Divider(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Mar 17,2021",
+                    createdDate,
                     style: TextStyle(fontSize: 20),
                   ),
                   Container(
@@ -54,7 +66,7 @@ class TaskCard extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: Colors.lime,
                         borderRadius: BorderRadius.circular(8.0)),
-                    child: Center(child: Text("Status")),
+                    child: Center(child: Text(taskStatus)),
                   )
                 ],
               )

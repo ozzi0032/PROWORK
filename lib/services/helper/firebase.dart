@@ -41,7 +41,23 @@ class FirebaseService implements BaseServices {
       DocumentReference dr = _firebaseFirestore.collection('Task').doc();
       await dr.set(taskModel.toJSON(taskModel));
     } on FirebaseException catch (e) {
-      return null;
+      return e;
+    }
+  }
+
+  @override
+  Future<List<TaskModel>> getTask(UserModel userModel) async {
+    List<TaskModel> tasksList = [];
+    try {
+      var snapshot = await _firebaseFirestore
+          .collection('Task')
+          .where('employerId', isEqualTo: userModel.userId)
+          .get();
+      List<DocumentSnapshot> items = snapshot.docs;
+      tasksList = items.map((e) => TaskModel.fromFirestore(ds: e));
+      return tasksList;
+    } catch (e) {
+      return e;
     }
   }
 

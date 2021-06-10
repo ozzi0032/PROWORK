@@ -240,17 +240,25 @@ class _AddTaskState extends State<AddTask> {
                                     description: _descriptionController.text,
                                     price: double.parse(_moneyController.text),
                                     category: [
-                                      _catSelectedItem.id,
-                                      _subCatSelectedItem.id
+                                      _catSelectedItem.name,
+                                      _subCatSelectedItem.name
                                     ],
                                     timeAllocated: '$daysCount' + ' days'))
-                                .then((_) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text(model.message)));
-                            }).onError((error, stackTrace) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text(model.message)));
+                                .whenComplete(() {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text(
+                                  model.message,
+                                ),
+                              ));
                             });
+                            //     .then((_) {
+                            //   ScaffoldMessenger.of(context).showSnackBar(
+                            //       SnackBar(content: Text(model.message)));
+                            // }).onError((error, stackTrace) {
+                            //   ScaffoldMessenger.of(context).showSnackBar(
+                            //       SnackBar(content: Text(model.message)));
+                            // });
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 content:

@@ -2,16 +2,25 @@ import 'package:PROWORK/model/model_task.dart';
 import 'package:PROWORK/service_locator.dart';
 import 'package:PROWORK/services/index.dart';
 import 'package:PROWORK/viewmodel/user_viewmodel.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import '../utills/date_time_utils.dart';
 
 class TaskViewModel extends ChangeNotifier {
+  TaskViewModel() {
+    //trigger listening to the document changes in the collection "Task"
+    FirebaseFirestore.instance.collection('Task').snapshots().listen((event) {
+      getMyTask();
+    });
+  }
   final Services _service = Services();
   //To access the registered objects call get<Type>() on your GetIt instance
   final userViewModel = serviceLocator.get<UserViewModel>();
 
   bool isLoading = false;
   String message = 'message';
+
+  List<TaskModel> myTasks = [];
 
   Future<void> addTask(TaskModel taskModel) async {
     taskModel.employerId = userViewModel.user.userId;
@@ -36,6 +45,21 @@ class TaskViewModel extends ChangeNotifier {
       message = "There is an issue with the app during request the data, "
               "please contact admin for fixing the issues " +
           e.toString();
+      isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> getMyTask() async {
+    try {
+      isLoading = true;
+      notifyListeners();
+      myTasks = await _service.getTask(userViewModel.user);
+      isLoading = false;
+      notifyListeners();
+    } catch (e) {
+      message = "There is an issue with the app during request the data, "
+          "please contact admin for fixing the issues";
       isLoading = false;
       notifyListeners();
     }
