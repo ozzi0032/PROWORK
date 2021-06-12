@@ -68,8 +68,8 @@ class _AddTaskState extends State<AddTask> {
                       ),
                       Container(
                         padding: const EdgeInsets.all(5.0),
-                        height: MediaQuery.of(context).size.height / 15.0,
-                        width: MediaQuery.of(context).size.width,
+                        //height: MediaQuery.of(context).size.height / 15.0,
+                        //width: MediaQuery.of(context).size.width,
                         child: AppCustomInputField(
                           controller: _titleController,
                           labelText: AppConstants.taskTitleLabel,
@@ -93,8 +93,8 @@ class _AddTaskState extends State<AddTask> {
                       ),
                       Container(
                         padding: const EdgeInsets.all(5.0),
-                        height: MediaQuery.of(context).size.height / 3.0,
-                        width: MediaQuery.of(context).size.width,
+                        //height: MediaQuery.of(context).size.height / 3.0,
+                        //width: MediaQuery.of(context).size.width,
                         child: AppCustomInputField(
                           controller: _descriptionController,
                           labelText: AppConstants
@@ -216,8 +216,8 @@ class _AddTaskState extends State<AddTask> {
                       ),
                       Container(
                         padding: const EdgeInsets.all(5.0),
-                        height: MediaQuery.of(context).size.height / 15.0,
-                        width: MediaQuery.of(context).size.width,
+                        //height: MediaQuery.of(context).size.height / 15.0,
+                        //width: MediaQuery.of(context).size.width,
                         child: AppCustomInputField(
                           controller: _moneyController,
                           labelText: AppConstants
@@ -234,23 +234,22 @@ class _AddTaskState extends State<AddTask> {
                       GestureDetector(
                         onTap: () async {
                           if (_formKey.currentState.validate()) {
-                            await model
-                                .addTask(TaskModel(
-                                    title: _titleController.text,
-                                    description: _descriptionController.text,
-                                    price: double.parse(_moneyController.text),
-                                    category: [
-                                      _catSelectedItem.id,
-                                      _subCatSelectedItem.id
-                                    ],
-                                    timeAllocated: '$daysCount' + ' days'))
-                                .then((_) {
+                            await model.addTask(TaskModel(
+                                title: _titleController.text,
+                                description: _descriptionController.text,
+                                price: double.parse(_moneyController.text),
+                                category: [
+                                  _catSelectedItem.id,
+                                  _subCatSelectedItem.id
+                                ],
+                                timeAllocated: '$daysCount' + ' days'));
+                            /*.then((_) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(content: Text(model.message)));
                             }).onError((error, stackTrace) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(content: Text(model.message)));
-                            });
+                            });*/
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 content:
