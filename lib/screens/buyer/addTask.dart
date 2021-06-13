@@ -68,8 +68,8 @@ class _AddTaskState extends State<AddTask> {
                       ),
                       Container(
                         padding: const EdgeInsets.all(5.0),
-                        height: MediaQuery.of(context).size.height / 15.0,
-                        width: MediaQuery.of(context).size.width,
+                        //height: MediaQuery.of(context).size.height / 15.0,
+                        //width: MediaQuery.of(context).size.width,
                         child: AppCustomInputField(
                           controller: _titleController,
                           labelText: AppConstants.taskTitleLabel,
@@ -93,8 +93,8 @@ class _AddTaskState extends State<AddTask> {
                       ),
                       Container(
                         padding: const EdgeInsets.all(5.0),
-                        height: MediaQuery.of(context).size.height / 3.0,
-                        width: MediaQuery.of(context).size.width,
+                        //height: MediaQuery.of(context).size.height / 3.0,
+                        //width: MediaQuery.of(context).size.width,
                         child: AppCustomInputField(
                           controller: _descriptionController,
                           labelText: AppConstants
@@ -216,8 +216,8 @@ class _AddTaskState extends State<AddTask> {
                       ),
                       Container(
                         padding: const EdgeInsets.all(5.0),
-                        height: MediaQuery.of(context).size.height / 15.0,
-                        width: MediaQuery.of(context).size.width,
+                        //height: MediaQuery.of(context).size.height / 15.0,
+                        //width: MediaQuery.of(context).size.width,
                         child: AppCustomInputField(
                           controller: _moneyController,
                           labelText: AppConstants

@@ -35,6 +35,7 @@ dependencies:
   firebase_storage: any
   localstorage: ^3.0.6
   checkbox_grouped:
+  auto_size_text:
   
   
 

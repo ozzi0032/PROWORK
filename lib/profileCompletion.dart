@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:PROWORK/model/model_category.dart';
 import 'package:PROWORK/model/model_user.dart';
+import 'package:PROWORK/profileSubmitted.dart';
 import 'package:PROWORK/services/helper/firebase.dart';
 import 'package:PROWORK/utills/exceptions.dart';
 import 'package:PROWORK/utills/sharedPrefs.dart';
@@ -326,7 +327,7 @@ class _UserProfileCompletionState extends State<UserProfileCompletion> {
                         return DropdownButton(
                           isExpanded: false,
                           elevation: 7,
-                          dropdownColor: Colors.cyan,
+                          dropdownColor: Colors.grey,
                           items: snapshot.data.docs.map((value) {
                             return DropdownMenuItem(
                               value: value.get("Name"),
@@ -603,12 +604,16 @@ class _UserProfileCompletionState extends State<UserProfileCompletion> {
                             await mapskill();
                           }
                           await model.saveUser(_userModel);
-                          Navigator.push(
+                          /*Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (_) => MainTabs(
                                         isBuyer: false,
-                                      )));
+                                      )));*/
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => ProfileSubmitted()));
                         }
                       } on CustomeExceptions catch (e) {
                         setState(() {

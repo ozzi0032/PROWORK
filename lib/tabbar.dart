@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:PROWORK/indexProvider.dart';
 import 'package:PROWORK/menu.dart';
 import 'package:PROWORK/screens/buyer/index.dart';
 import 'package:after_layout/after_layout.dart';
@@ -53,9 +54,10 @@ class _MainTabsState extends State<MainTabs>
       Center(
         child: Text("Provider Home"),
       ),
-      Center(
+      /*Center(
         child: Text("Provider Tasks"),
-      ),
+      ),*/
+      ProviderHomeFragment(),
       Center(child: Profile())
     ];
 

@@ -65,8 +65,9 @@ class _AppCustomInputFieldState extends State<AppCustomInputField> {
                     borderSide: BorderSide(color: AppColors.blueColorGoogle),
                     borderRadius: BorderRadius.circular(5.0)),
                 hintText: widget.hintText,
-                prefixIcon:
-                    widget.hasPrefix ? widget.prefixIcon : Container()));
+                prefixIcon: widget.hasPrefix
+                    ? widget.prefixIcon
+                    : /*Container()*/ null));
     //);
   }
 

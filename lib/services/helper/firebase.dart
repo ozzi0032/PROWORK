@@ -157,4 +157,20 @@ class FirebaseService implements BaseServices {
     });
     return status;
   }
+
+  Future<bool> checkProviderStatus(String id) async {
+    bool status = false;
+    var snapshot = await _firebaseFirestore
+        .collection('User')
+        .where('userId', isEqualTo: id)
+        .limit(1)
+        .get();
+    DocumentSnapshot snap = snapshot.docs[0];
+    String statusType = snap.get("status");
+    if (statusType == "approved") {
+      status = true;
+      return status;
+    }
+    return status;
+  }
 }
