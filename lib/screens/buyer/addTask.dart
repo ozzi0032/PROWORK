@@ -232,9 +232,9 @@ class _AddTaskState extends State<AddTask> {
                         height: 10,
                       ),
                       GestureDetector(
-                        onTap: () async {
+                        onTap: () {
                           if (_formKey.currentState.validate()) {
-                            await model
+                            model
                                 .addTask(TaskModel(
                                     title: _titleController.text,
                                     description: _descriptionController.text,
@@ -244,21 +244,14 @@ class _AddTaskState extends State<AddTask> {
                                       _subCatSelectedItem.name
                                     ],
                                     timeAllocated: '$daysCount' + ' days'))
-                                .whenComplete(() {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text(
-                                  model.message,
-                                ),
-                              ));
+                                .then((_) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(model.message)));
+                              Navigator.of(context).pop();
+                            }).onError((error, stackTrace) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(model.message)));
                             });
-                            //     .then((_) {
-                            //   ScaffoldMessenger.of(context).showSnackBar(
-                            //       SnackBar(content: Text(model.message)));
-                            // }).onError((error, stackTrace) {
-                            //   ScaffoldMessenger.of(context).showSnackBar(
-                            //       SnackBar(content: Text(model.message)));
-                            // });
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 content:

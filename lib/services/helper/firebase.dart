@@ -47,14 +47,16 @@ class FirebaseService implements BaseServices {
 
   @override
   Future<List<TaskModel>> getTask(UserModel userModel) async {
-    List<TaskModel> tasksList = [];
     try {
+      List<TaskModel> tasksList = [];
       var snapshot = await _firebaseFirestore
           .collection('Task')
           .where('employerId', isEqualTo: userModel.userId)
           .get();
-      List<DocumentSnapshot> items = snapshot.docs;
-      tasksList = items.map((e) => TaskModel.fromFirestore(ds: e));
+      snapshot.docs.forEach((document) {
+        tasksList.add(TaskModel.fromFirestore(document));
+      });
+      //tasksList = items.map((e) => TaskModel.fromFirestore(ds: e));
       return tasksList;
     } catch (e) {
       return e;

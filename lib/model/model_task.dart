@@ -11,7 +11,7 @@ class TaskModel {
   String status;
   String createdDate;
   String timeAllocated;
-  List<String> category;
+  List category;
   TaskModel(
       {this.employerId,
       this.employer,
@@ -24,20 +24,20 @@ class TaskModel {
       this.timeAllocated,
       this.category});
 
-  factory TaskModel.fromFirestore({DocumentSnapshot ds, Map mapData}) {
+  factory TaskModel.fromFirestore(DocumentSnapshot ds) {
     var taskId = ds.id;
     var docData = ds.data();
     return TaskModel(
-      employerId: docData['employerId'] ?? mapData['employerId'],
-      employer: docData['employer'] ?? mapData['employer'],
+      employerId: docData['employerId'],
+      employer: docData['employer'],
       id: taskId, //ID from documentID
-      title: docData['title'] ?? mapData['title'],
-      description: docData['description'] ?? mapData['description'],
-      price: double.parse(docData['price']) ?? double.parse(mapData['price']),
-      status: docData['status'] ?? mapData['status'],
-      createdDate: docData['createdDate'] ?? mapData['createdDate'],
-      timeAllocated: docData['timeAllocated'] ?? mapData['timeAllocated'],
-      category: docData['category'] ?? mapData['category'],
+      title: docData['title'],
+      description: docData['description'],
+      price: double.parse(docData['price']),
+      status: docData['status'],
+      createdDate: docData['createdDate'],
+      timeAllocated: docData['timeAllocated'],
+      category: docData['category'],
     );
   }
 

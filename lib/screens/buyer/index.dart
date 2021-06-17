@@ -38,6 +38,7 @@ class _BuyerHomeFragmentState extends State<BuyerHomeFragment> {
                       return TaskCard(
                           userName: model.myTasks[index].employer['Profile']
                                   ['fname'] +
+                              ' ' +
                               model.myTasks[index].employer['Profile']['lname'],
                           imageUrl: model.myTasks[index].employer['Profile']
                               ['profileUrl'],
