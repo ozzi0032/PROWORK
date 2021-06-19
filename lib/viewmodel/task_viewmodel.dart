@@ -11,6 +11,7 @@ class TaskViewModel extends ChangeNotifier {
     //trigger listening to the document changes in the collection "Task"
     FirebaseFirestore.instance.collection('Task').snapshots().listen((event) {
       getMyTask();
+      getTaskNotification();
     });
   }
   final Services _service = Services();
@@ -21,6 +22,7 @@ class TaskViewModel extends ChangeNotifier {
   String message = 'message';
 
   List<TaskModel> myTasks = [];
+  List<TaskModel> notifiedTasks = [];
 
   Future<void> addTask(TaskModel taskModel) async {
     taskModel.employerId = userViewModel.user.userId;
@@ -57,6 +59,21 @@ class TaskViewModel extends ChangeNotifier {
       myTasks = await _service.getTask(userViewModel.user);
       isLoading = false;
       notifyListeners();
+    } catch (e) {
+      message = "There is an issue with the app during request the data, "
+          "please contact admin for fixing the issues";
+      isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  //Notify Provider about the cat specific Tasks
+  Future<void> getTaskNotification() async {
+    try {
+      isLoading = true;
+      notifyListeners();
+      notifiedTasks =
+          await _service.getTaskNotification(userViewModel.mappedSkills);
     } catch (e) {
       message = "There is an issue with the app during request the data, "
           "please contact admin for fixing the issues";

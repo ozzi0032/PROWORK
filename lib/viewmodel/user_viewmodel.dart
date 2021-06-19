@@ -1,3 +1,4 @@
+import 'package:PROWORK/model/model_category.dart';
 import 'package:PROWORK/model/model_user.dart';
 import 'package:PROWORK/services/helper/firebase.dart';
 import 'package:PROWORK/utills/sharedPrefs.dart';
@@ -17,6 +18,7 @@ class UserViewModel extends ChangeNotifier {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseService _firebaseFunctions = FirebaseService();
   UserModel user;
+  SkillsMapping mappedSkills;
   String _verificationId;
   String message;
 
@@ -127,6 +129,10 @@ class UserViewModel extends ChangeNotifier {
     await storage.clear();
     user = null;
     notifyListeners();
+  }
+
+  Future<void> getMappedSkills() async {
+    mappedSkills = await _firebaseFunctions.getMappedSkills(user);
   }
 
   // void updateUser(UserModel newUser) {

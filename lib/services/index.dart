@@ -7,6 +7,7 @@ abstract class BaseServices {
   Future<List<CategoryModel>> getCategories();
   Future<void> addTask(TaskModel taskModel);
   Future<List<TaskModel>> getTask(UserModel userModel);
+  Future<List<TaskModel>> getTaskNotification(SkillsMapping skillsMapping);
 }
 
 class Services implements BaseServices {
@@ -31,5 +32,10 @@ class Services implements BaseServices {
   @override
   Future<List<TaskModel>> getTask(UserModel userModel) async {
     return baseServices.getTask(userModel);
+  }
+
+  @override
+  Future<List<TaskModel>> getTaskNotification(SkillsMapping skillsMapping) async {
+    return baseServices.getTaskNotification(skillsMapping);
   }
 }

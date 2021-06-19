@@ -1,10 +1,13 @@
 import 'package:PROWORK/screens/onboarding.dart';
+import 'package:PROWORK/screens/provider/task_notification.dart';
+import 'package:PROWORK/service_locator.dart';
 import 'package:PROWORK/viewmodel/user_viewmodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MenuBar extends StatelessWidget {
+  final userViewModel = serviceLocator.get<UserViewModel>();
   final _auth = FirebaseAuth.instance;
   User user;
   @override
@@ -33,7 +36,12 @@ class MenuBar extends StatelessWidget {
           leading: Icon(Icons.assessment_rounded),
           title: Text("Task"),
           trailing: Icon(Icons.arrow_right),
-          onTap: () {},
+          onTap: () {
+            userViewModel.user.roleType == 'provider'
+                ? Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => TaskNotification()))
+                : null;
+          },
         ),
         ListTile(
             leading: Icon(Icons.person),

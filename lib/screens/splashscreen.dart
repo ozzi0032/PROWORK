@@ -4,6 +4,7 @@ import 'package:PROWORK/services/helper/firebase.dart';
 import 'package:PROWORK/tabbar.dart';
 import 'package:PROWORK/utills/sharedPrefs.dart';
 import 'package:PROWORK/viewmodel/category_viewmodel.dart';
+import 'package:PROWORK/viewmodel/task_viewmodel.dart';
 import 'package:PROWORK/viewmodel/user_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
@@ -21,9 +22,10 @@ class _SplashScreenState extends State<SplashScreen> {
   //final UserViewModel userViewModel = serviceLocator<UserViewModel>();
   FirebaseService _firebaseService = new FirebaseService();
   final userViewModel = serviceLocator.get<UserViewModel>();
+  final taskViewModel = serviceLocator.get<TaskViewModel>();
   bool isLoggedIn = false;
   timer() async {
-    var _duration = Duration(seconds: 2);
+    var _duration = Duration(seconds: 4);
     return Timer(
       _duration,
       () async {
@@ -64,6 +66,11 @@ class _SplashScreenState extends State<SplashScreen> {
   loadInitData() async {
     isLoggedIn = await SharedPrefs.getLoginStatus();
     await userViewModel.loadUser();
+    //Load provider's mapped skills
+    if (userViewModel.user.roleType == 'provider') {
+      await userViewModel.getMappedSkills();
+      //await taskViewModel.getTaskNotification();
+    }
     Provider.of<CategoryViewModel>(context, listen: false).getCategories();
   }
 

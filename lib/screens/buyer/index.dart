@@ -43,7 +43,7 @@ class _BuyerHomeFragmentState extends State<BuyerHomeFragment> {
                           imageUrl: model.myTasks[index].employer['Profile']
                               ['profileUrl'],
                           taskTitle: model.myTasks[index].title,
-                          taskStatus: model.myTasks[index].status,
+                          taskStatus: model.myTasks[index].status, 
                           createdDate: model.myTasks[index].createdDate);
                     } else {
                       return Center(

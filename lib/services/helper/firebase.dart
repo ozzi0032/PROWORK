@@ -63,6 +63,27 @@ class FirebaseService implements BaseServices {
     }
   }
 
+  //Notify Provider about the category specific tasks
+  @override
+  Future<List<TaskModel>> getTaskNotification(
+      SkillsMapping skillsMapping) async {
+    try {
+      List<TaskModel> tasksList = [];
+      var snapshot = await _firebaseFirestore
+          .collection('Task')
+          .where('category',
+              arrayContains:
+                  'Automotive') //, arrayContainsAny: skillsMapping.skills)
+          .get();
+      snapshot.docs.forEach((document) {
+        tasksList.add(TaskModel.fromFirestore(document));
+      });
+      return tasksList;
+    } catch (e) {
+      return e;
+    }
+  }
+
   Future addUser(UserModel userModel) async {
     DocumentReference dr = _firebaseFirestore.collection('User').doc();
     await dr.set(userModel.toJSON(userModel)).whenComplete(() {
@@ -112,6 +133,21 @@ class FirebaseService implements BaseServices {
       return user;
     } else
       return false;
+  }
+
+  getMappedSkills(UserModel user) async {
+    try {
+      SkillsMapping mappedSkills;
+      var snapshot = await _firebaseFirestore
+          .collection('Skills Mapping')
+          .where('userId', isEqualTo: user.userId)
+          .limit(1)
+          .get();
+      mappedSkills = SkillsMapping.fromFirestore(snapshot.docs[0]);
+      return mappedSkills;
+    } catch (e) {
+      return e;
+    }
   }
 
   static UploadTask uploadFile(String destination, File file) {

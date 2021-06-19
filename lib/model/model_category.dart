@@ -21,15 +21,15 @@ class CategoryModel {
 class SkillsMapping {
   String uid;
   UserModel userModel;
-  List<String> skills;
+  List skills;
   SkillsMapping({this.userModel, this.uid, this.skills});
 
   factory SkillsMapping.fromFirestore(DocumentSnapshot ds) {
     var map = ds.data();
     return SkillsMapping(
         uid: map['userId'],
-        userModel: UserModel.fromFirestore(map['user']),
-        skills: map['skills']);
+        userModel: UserModel.fromJSON(map['user']),
+        skills: map['category']);
   }
 
   toJSON(SkillsMapping obj) {

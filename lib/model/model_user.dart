@@ -25,7 +25,7 @@ class UserModel {
 
   factory UserModel.fromFirestore(Map map) {
     return UserModel(
-      userId: map['userId'],
+      userId: map['userId'] ?? 'userId',
       roleType: map['roleType'],
       status: map['status'],
       fname: map['Profile']['fname'],
@@ -36,6 +36,20 @@ class UserModel {
       address: map['Profile']['address'],
       cnicFront: map['Profile']['cnicFront'],
       cnicBack: map['Profile']['cnciBack'],
+    );
+  }
+
+  factory UserModel.fromJSON(Map map) {
+    return UserModel(
+      userId: map['userId'] ?? 'userId',
+      fname: map['fname'],
+      lname: map['lname'],
+      phoneNumber: map['phoneNumber'],
+      email: map['email'],
+      profileUrl: map['profileUrl'],
+      address: map['address'],
+      cnicFront: map['cnicFront'],
+      cnicBack: map['cnciBack'],
     );
   }
 
@@ -51,9 +65,10 @@ class UserModel {
           'lname': lname,
           'phoneNumber': phoneNumber,
           'profileUrl': profileUrl,
-          "address": address,
-          "cnicFront": cnicFront,
-          "cnciBack": cnicBack,
+          'address': address,
+          'cnicFront': cnicFront,
+          'cnciBack': cnicBack,
+          'userId': userId
         },
         'roleType': roleType,
         'status': status,
