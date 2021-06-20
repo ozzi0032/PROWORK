@@ -1,3 +1,4 @@
+import 'package:PROWORK/screens/buyer/task_request.dart';
 import 'package:PROWORK/screens/onboarding.dart';
 import 'package:PROWORK/screens/provider/task_notification.dart';
 import 'package:PROWORK/service_locator.dart';
@@ -41,7 +42,8 @@ class MenuBar extends StatelessWidget {
             userViewModel.user.roleType == 'provider'
                 ? Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => TaskNotification()))
-                : null;
+                : Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => TaskRequest()));
           },
         ),
         ListTile(

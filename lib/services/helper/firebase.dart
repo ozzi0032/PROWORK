@@ -98,6 +98,46 @@ class FirebaseService implements BaseServices {
     }
   }
 
+  @override
+  Future<List<TaskMapping>> getTaskRequest(UserModel userModel) async {
+    try {
+      List<TaskMapping> tasksMapped = [];
+      var snapshot = await _firebaseFirestore
+          .collection('Task Mapping')
+          .where('task.employerId', isEqualTo: userModel.userId)
+          .get();
+      snapshot.docs.forEach((document) {
+        if (document['task']['status'] == 'unassigned') {
+          tasksMapped.add(TaskMapping.fromFirestore(document));
+        }
+      });
+      return tasksMapped;
+    } catch (e) {
+      return e;
+    }
+  }
+
+  @override
+  Future<void> acceptTaskReq(String id, TaskMapping taskMapping) async {
+    try {
+      var snapshot = await _firebaseFirestore
+          .collection('Task Mapping')
+          .where('employee.userId', isEqualTo: id)
+          .limit(1)
+          .get();
+      DocumentReference dr =
+          _firebaseFirestore.collection('TaskMapping').doc(snapshot.docs[0].id);
+      await dr.set(taskMapping.toMap());
+
+      //Now update the task status in the collection "Task"
+      DocumentReference taskRef =
+          _firebaseFirestore.collection('Task').doc(taskMapping.taskId);
+      await taskRef.set(taskMapping.task);
+    } catch (e) {
+      return e;
+    }
+  }
+
   Future addUser(UserModel userModel) async {
     DocumentReference dr = _firebaseFirestore.collection('User').doc();
     await dr.set(userModel.toJSON(userModel)).whenComplete(() {

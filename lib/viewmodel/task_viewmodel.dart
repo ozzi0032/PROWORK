@@ -13,6 +13,14 @@ class TaskViewModel extends ChangeNotifier {
       getMyTask();
       getTaskNotification();
     });
+
+    //trigger listening to the document changes in the collection "Task Mapping to view applied requests"
+    FirebaseFirestore.instance
+        .collection('Task Mapping')
+        .snapshots()
+        .listen((event) {
+      getTaskRequest();
+    });
   }
   final Services _service = Services();
   //To access the registered objects call get<Type>() on your GetIt instance
@@ -23,6 +31,7 @@ class TaskViewModel extends ChangeNotifier {
 
   List<TaskModel> myTasks = [];
   List<TaskModel> notifiedTasks = [];
+  List<TaskMapping> taskRequests = [];
 
   Future<void> addTask(TaskModel taskModel) async {
     taskModel.employerId = userViewModel.user.userId;
@@ -93,6 +102,46 @@ class TaskViewModel extends ChangeNotifier {
       notifyListeners();
       await _service.applyTask(taskMapping);
       message = "Applied for the task";
+      isLoading = false;
+      notifyListeners();
+    } catch (e) {
+      message = "There is an issue with the app during request the data, "
+          "please contact admin for fixing the issues";
+      isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> getTaskRequest() async {
+    try {
+      isLoading = true;
+      notifyListeners();
+      taskRequests = await _service.getTaskRequest(userViewModel.user);
+      isLoading = false;
+      notifyListeners();
+    } catch (e) {
+      message = "There is an issue with the app during request the data, "
+          "please contact admin for fixing the issues";
+      isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> acceptTaskRequest(TaskMapping taskMapping) async {
+    try {
+      String employeeId;
+
+      isLoading = true;
+      notifyListeners();
+
+      //Set Task Status to "Assigned"
+      taskMapping.task['status'] = 'assigned';
+      employeeId = taskMapping.employee['userId'];
+
+      //Send Params
+      await _service.acceptTaskReq(employeeId, taskMapping);
+      message = "Task assigned successfully";
+
       isLoading = false;
       notifyListeners();
     } catch (e) {

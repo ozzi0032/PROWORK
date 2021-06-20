@@ -1,4 +1,5 @@
 import 'package:PROWORK/screens/buyer/addTask.dart';
+import 'package:PROWORK/service_locator.dart';
 import 'package:PROWORK/style/appColors.dart';
 import 'package:PROWORK/viewmodel/task_viewmodel.dart';
 import 'package:PROWORK/widgets/taskCard.dart';
@@ -11,6 +12,14 @@ class BuyerHomeFragment extends StatefulWidget {
 }
 
 class _BuyerHomeFragmentState extends State<BuyerHomeFragment> {
+  final taskViewModel = serviceLocator.get<TaskViewModel>();
+
+  @override
+  void initState() {
+    taskViewModel.getMyTask();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +52,7 @@ class _BuyerHomeFragmentState extends State<BuyerHomeFragment> {
                           imageUrl: model.myTasks[index].employer['Profile']
                               ['profileUrl'],
                           taskTitle: model.myTasks[index].title,
-                          taskStatus: model.myTasks[index].status, 
+                          taskStatus: model.myTasks[index].status,
                           createdDate: model.myTasks[index].createdDate);
                     } else {
                       return Center(
