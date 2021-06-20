@@ -5,6 +5,7 @@ import 'package:PROWORK/viewmodel/user_viewmodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MenuBar extends StatelessWidget {
   final userViewModel = serviceLocator.get<UserViewModel>();
@@ -70,12 +71,16 @@ class MenuBar extends StatelessWidget {
                 leading: Icon(Icons.logout),
                 title: Text("Logout"),
                 onTap: () async {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  prefs?.clear();
                   await _auth.signOut();
                   model.clearStorage();
-                  Navigator.pushReplacement(
-                      context,
+
+                  Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(
-                          builder: (context) => OnboardingScreen()));
+                          builder: (context) => OnboardingScreen()),
+                      (Route<dynamic> route) => false);
                 });
           },
         ),

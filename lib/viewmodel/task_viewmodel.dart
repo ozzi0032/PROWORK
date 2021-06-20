@@ -81,4 +81,25 @@ class TaskViewModel extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> applyForTask(TaskModel taskModel) async {
+    try {
+      TaskMapping taskMapping = TaskMapping();
+      taskMapping.taskId = taskModel.id;
+      taskMapping.task = taskModel.toMap();
+      taskMapping.employee = userViewModel.user.toMap();
+
+      isLoading = true;
+      notifyListeners();
+      await _service.applyTask(taskMapping);
+      message = "Applied for the task";
+      isLoading = false;
+      notifyListeners();
+    } catch (e) {
+      message = "There is an issue with the app during request the data, "
+          "please contact admin for fixing the issues";
+      isLoading = false;
+      notifyListeners();
+    }
+  }
 }

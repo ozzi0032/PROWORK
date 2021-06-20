@@ -1,6 +1,4 @@
-import 'package:PROWORK/screens/buyer/addTask.dart';
 import 'package:PROWORK/style/appColors.dart';
-import 'package:PROWORK/widgets/taskDetailsProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +24,7 @@ class _ProviderHomeFragmentState extends State<ProviderHomeFragment> {
             ],
           )),
       body: ListView.builder(
-          itemCount: 1, itemBuilder: (context, index) => TaskDetails()),
+          itemCount: 1, itemBuilder: (context, index) => Text('Home')),
     );
   }
 }

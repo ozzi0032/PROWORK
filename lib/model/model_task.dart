@@ -1,4 +1,3 @@
-import 'package:PROWORK/model/model_category.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TaskModel {
@@ -60,4 +59,23 @@ class TaskModel {
       };
 }
 
-class TaskMapping {}
+class TaskMapping {
+  Map employee;
+  Map task;
+  String taskId;
+  TaskMapping({this.employee, this.task, this.taskId});
+
+  factory TaskMapping.fromFirestore(DocumentSnapshot ds) {
+    var map = ds.data();
+    return TaskMapping(
+        employee: map['employee'], task: map['task'], taskId: map['taskId']);
+  }
+
+  toJSON(TaskMapping obj) {
+    final data = obj.toMap();
+    return data;
+  }
+
+  Map<String, dynamic> toMap() =>
+      {'employee': employee, 'task': task, 'taskId': taskId};
+}

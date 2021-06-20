@@ -76,9 +76,23 @@ class FirebaseService implements BaseServices {
                   'Automotive') //, arrayContainsAny: skillsMapping.skills)
           .get();
       snapshot.docs.forEach((document) {
-        tasksList.add(TaskModel.fromFirestore(document));
+        if (document['status'] == 'unassigned') {
+          tasksList.add(TaskModel.fromFirestore(document));
+        }
       });
       return tasksList;
+    } catch (e) {
+      return e;
+    }
+  }
+
+  @override
+  Future<void> applyTask(TaskMapping taskMapping) async {
+    try {
+      await _firebaseFirestore
+          .collection('Task Mapping')
+          .doc()
+          .set(taskMapping.toMap());
     } catch (e) {
       return e;
     }
