@@ -20,7 +20,7 @@ class TaskCard extends StatelessWidget {
       clipBehavior: Clip.antiAliasWithSaveLayer,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
       child: Container(
-          height: 150,
+          height: 180,
           width: MediaQuery.of(context).size.width,
           padding: const EdgeInsets.all(12.0),
           child: Column(
@@ -53,13 +53,15 @@ class TaskCard extends StatelessWidget {
               ),
               Text(taskTitle),
               Divider(),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Text(
+                  createdDate,
+                  style: TextStyle(fontSize: 20),
+                ),
+              ]),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    createdDate,
-                    style: TextStyle(fontSize: 20),
-                  ),
                   Container(
                     height: 25,
                     width: 80,
