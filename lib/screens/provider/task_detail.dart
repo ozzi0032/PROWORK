@@ -43,7 +43,8 @@ class _TaskDetailState extends State<TaskDetail> {
             SizedBox(height: 5),
             Container(
               padding: const EdgeInsets.all(8.0),
-              height: MediaQuery.of(context).size.width / 2.3,
+              //height: MediaQuery.of(context).size.width / 2.3,
+              height: 300,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                   color: Colors.grey[200],
@@ -118,13 +119,17 @@ class _TaskDetailState extends State<TaskDetail> {
                     ],
                   ),
                   Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Created Date",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w500),
+                        ),
+                      ]),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "Created Date",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w500),
-                      ),
                       Text(
                         widget.taskModel.createdDate,
                         style:
