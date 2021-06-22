@@ -127,12 +127,12 @@ class FirebaseService implements BaseServices {
           .get();
       DocumentReference dr =
           _firebaseFirestore.collection('TaskMapping').doc(snapshot.docs[0].id);
-      await dr.set(taskMapping.toMap());
+      await dr.update(taskMapping.toMap());
 
       //Now update the task status in the collection "Task"
       DocumentReference taskRef =
           _firebaseFirestore.collection('Task').doc(taskMapping.taskId);
-      await taskRef.set(taskMapping.task);
+      await taskRef.update(taskMapping.task);
     } catch (e) {
       return e;
     }
