@@ -125,8 +125,9 @@ class FirebaseService implements BaseServices {
           .where('employee.userId', isEqualTo: id)
           .limit(1)
           .get();
-      DocumentReference dr =
-          _firebaseFirestore.collection('TaskMapping').doc(snapshot.docs[0].id);
+      DocumentReference dr = _firebaseFirestore
+          .collection('Task Mapping')
+          .doc(snapshot.docs[0].id);
       await dr.update(taskMapping.toMap());
 
       //Now update the task status in the collection "Task"
