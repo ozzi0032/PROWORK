@@ -92,6 +92,15 @@ class _TaskRequestState extends State<TaskRequest> {
             maxLines: 2,
           ),
         ),
+        ListTile(
+          isThreeLine: true,
+          leading: Icon(Icons.phone),
+          title: Text("Phone"),
+          subtitle: Text(
+            taskMapping.employee['Profile']['phoneNumber'],
+            maxLines: 2,
+          ),
+        ),
         Divider(
           color: Colors.grey,
           thickness: 1,
